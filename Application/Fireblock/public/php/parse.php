@@ -112,8 +112,9 @@ function xmlToCode($xmlDoc){
 	
 	//$string = preg_replace('/[\n]+/mi', '\n', $string);
 	//$string = preg_replace('/[ ]+/mi', ' ',$string);
-	//$_SESSION['file'] = $string;
-	//header('Location:../php/send.php'); 
+	$_SESSION['file'] = $string;
+
+	header('Location:../gcc/compile.php'); 
 
 }
 
@@ -254,7 +255,7 @@ function logic_bool($block){
 }
 
 function logic_negate($block){
-	$code = valuetoCode($block,"BOOL");
+	$code = valueToCode($block,"BOOL");
 	return "!".$code;
 }
 function logic_operation($block){
@@ -273,8 +274,8 @@ function logic_operation($block){
 
 function logic_ternary($block){
 	$condition = valueToCode($block,"IF");
-	$then = valuetoCode($block,"THEN");
-	$else = valuetoCode($block,"ELSE");
+	$then = valueToCode($block,"THEN");
+	$else = valueToCode($block,"ELSE");
 
 	return "(".$condition.")?".$then.":".$else;
 }
@@ -296,7 +297,7 @@ function controls_flow_statements($block){
 
 function controls_whileUntil($block){
 	$mode = getFieldValue($block,"MODE");
-	$arg = valuetoCode($block,"BOOL");
+	$arg = valueToCode($block,"BOOL");
 	$arg = ($arg!=NULL)?$arg:'0';
 	$statements = statementToCode($block,"DO");
 	if($mode == 'UNTIL'){
@@ -323,8 +324,8 @@ function textvalue($block){
 //IO
 function buzzer_msec($block){
 	global $definitions;
-	$definitions['includefirebird'] = "#include\"firebird.h\"";
-	$time = valuetoCode($block,"buzzer");
+	$definitions['includefirebird'] = "#include \"firebird.h\"";
+	$time = valueToCode($block,"buzzer");
 	$time = ($time!=NULL)?$time:'0';
 	return "buzzer_ms(".$time.");";
 }
@@ -332,7 +333,7 @@ function buzzer_msec($block){
 //MOTION
 function motion($block){
 	global $definitions;
-	$definitions['includefirebird'] = "#include\"firebird.h\"";
+	$definitions['includefirebird'] = "#include \"firebird.h\"";
 	$motion = getFieldValue($block,"motion");
 	
 	return $motion."()";
@@ -341,7 +342,7 @@ function motion($block){
 
 function turn($block){
 	global $definitions;
-	$definitions['includefirebird'] = "#include\"firebird.h\"";
+	$definitions['includefirebird'] = "#include \"firebird.h\"";
 	$motion = getFieldValue($block,"turn");
 	
 	return $motion."()";
@@ -350,7 +351,7 @@ function turn($block){
 
 function soft_turn($block){
 	global $definitions;
-	$definitions['includefirebird'] = "#include\"firebird.h\"";
+	$definitions['includefirebird'] = "#include \"firebird.h\"";
 	$motion = getFieldValue($block,"turn");
 	
 	return $motion."()";
@@ -358,7 +359,7 @@ function soft_turn($block){
 
 function back_turn($block){
 	global $definitions;
-	$definitions['includefirebird'] = "#include\"firebird.h\"";
+	$definitions['includefirebird'] = "#include \"firebird.h\"";
 	$motion = getFieldValue($block,"turn");
 	switch($motion){
 		case 'back_right':{$motion = "soft_right_2";break;}
@@ -371,19 +372,19 @@ function back_turn($block){
 //POSITIONS
 function position_motion($block){
 	global $definitions;
-	$definitions['includefirebird'] = "#include\"firebird.h\"";
+	$definitions['includefirebird'] = "#include \"firebird.h\"";
 	$arg = valueToCode($block,"motion");
 	$motion = getFieldValue($block,"forward");
 	switch($motion){
 		case 'fwd':{$motion = 'forward_mm';break;}
-		case 'back':{$motion = 'backward_mm';break;}
+		case 'back':{$motion = 'back_mm';break;}
 	}
-	return $motion."(".$arg.")";
+	return $motion."(".$arg.");";
 }
 
 function position_turn($block){
 	global $definitions;
-	$definitions['includefirebird'] = "#include\"firebird.h\"";
+	$definitions['includefirebird'] = "#include \"firebird.h\"";
 	$arg = valueToCode($block,"motion");
 	$arg = $arg%360;
 	$motion = getFieldValue($block,"forward");
@@ -391,12 +392,12 @@ function position_turn($block){
 		case 'right':{$motion = 'right_degrees';break;}
 		case 'left':{$motion = 'left_degrees';break;}
 	}
-	return $motion."(".$arg.")";
+	return $motion."(".$arg.");";
 }
 
 function position_turn_soft($block){
 	global $definitions;
-	$definitions['includefirebird'] = "#include\"firebird.h\"";
+	$definitions['includefirebird'] = "#include \"firebird.h\"";
 	$arg = valueToCode($block,"soft_turn");
 	$arg = $arg%360;
 	$motion = getFieldValue($block,"forward");
@@ -404,12 +405,12 @@ function position_turn_soft($block){
 		case 'right':{$motion = 'soft_right_degrees';break;}
 		case 'left':{$motion = 'soft_left_degrees';break;}
 	}
-	return $motion."(".$arg.")";
+	return $motion."(".$arg.");";
 }
 
 function position_turn_back($block){
 	global $definitions;
-	$definitions['includefirebird'] = "#include\"firebird.h\"";
+	$definitions['includefirebird'] = "#include \"firebird.h\"";
 	$arg = valueToCode($block,"turn_back");
 	$arg = $arg%360;
 	$motion = getFieldValue($block,"forward");
@@ -417,12 +418,12 @@ function position_turn_back($block){
 		case 'right':{$motion = 'soft_right_2_degrees';break;}
 		case 'left':{$motion = 'soft_left_2_degrees';break;}
 	}
-	return $motion."(".$arg.")";
+	return $motion."(".$arg.");";
 }
 
 function sensor_white($block){
 	global $definitions;
-	$definitions['includefirebird'] = "#include\"firebird.h\"";
+	$definitions['includefirebird'] = "#include \"firebird.h\"";
 	$arg = getFieldValue($block,"line_sensor");
 	$code='';
    switch ($arg) {
@@ -436,7 +437,7 @@ function sensor_white($block){
 
 function sensor_sharp($block){
 	global $definitions;
-	$definitions['includefirebird'] = "#include\"firebird.h\"";
+	$definitions['includefirebird'] = "#include \"firebird.h\"";
 	$arg = getFieldValue($block,"sharp");
 	$code = "";
     switch ($arg) {
@@ -452,28 +453,28 @@ function sensor_sharp($block){
 
 function sensor_ir($block){
 	global $definitions;
-	$definitions['includefirebird'] = "#include\"firebird.h\"";
+	$definitions['includefirebird'] = "#include \"firebird.h\"";
 	$arg = getFieldValue($block,"ir");
 	return $arg;
 }
 
 function buzzer_on($block){
 	global $definitions;
-	$definitions['includefirebird'] = "#include\"firebird.h\"";
+	$definitions['includefirebird'] = "#include \"firebird.h\"";
 	return "buzzer_on();";
 }
 
 function buzzer_off($block){
 	global $definitions;
-	$definitions['includefirebird'] = "#include\"firebird.h\"";
+	$definitions['includefirebird'] = "#include \"firebird.h\"";
 	return "buzzer_off();";
 }
 
 function delay_ms($block){
 	global $definitions;
-	$definitions['includedelay'] = "#include<util/delay.h>";
-	$value = valuetoCode($block,"NUM");
-	$value = $value !=NULL ?$value:"0";
+	$definitions['includedelay'] = "#include <util/delay.h>";
+	$value = valueToCode($block,"delay_value");
+	$value = $value!= NULL?$value:"0";
 	return "_delay_ms(".$value.");";
 }
 
@@ -496,7 +497,7 @@ function math_arithmetic($block){
 	}
 
 	if($arg1 == 'POWER'){
-		$definitions['includemath'] = "#include<math.h>";
+		$definitions['includemath'] = "#include <math.h>";
 		return "pow(".$arg0.",".$arg1.");";
 	}
 	$code = $arg0.$arg1.$arg2;
@@ -790,7 +791,7 @@ main();
 //$searchNode = $xmlDoc->getElementsByTagName('block')->item(0);
 //echo textvalue($searchNode);
 /*
-function valuetoCode($block,$name,$order){
+function valueToCode($block,$name,$order){
 	$x = getNode($block,'value');
 	if(!$x){
 		echo "Something went wrong!!!";
