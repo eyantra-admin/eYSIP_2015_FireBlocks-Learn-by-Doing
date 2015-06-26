@@ -13,7 +13,8 @@
 
 Route::get('/', 'FireblockController@index');
 
-Route::get('home', 'HomeController@index');
+
+Route::post('parsing', 'ParseController@parse');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

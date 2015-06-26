@@ -5,11 +5,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="google" value="notranslate">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="_token" content="{!! csrf_token() !!}"/>
 	<title>Fireblocks</title>
 
 	<script type="text/javascript" src="{{ URL::asset('/js/storage.js') }}"></script>
 	<script type="text/javascript" src="{{ URL::asset('/js/blockly_compressed.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('/js/blocks_compressed.js') }}"></script>
+  <script type="text/javascript" src="{{ URL::asset('http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('/js/firebird_compressed.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('/js/generators/firebird.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('/js/generators/firebird/display.js') }}"></script>
@@ -64,5 +66,10 @@
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    $.ajaxSetup({
+       headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+    });
+  </script>
 </body>
 </html>

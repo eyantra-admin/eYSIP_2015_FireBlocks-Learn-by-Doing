@@ -16,6 +16,7 @@ use Nathanmac\Utilities\Parser\Parser;
 define("INDENT", '   ');
 
 $definitions = array();
+$string ="";
 
 function prefixLines($text,$prefix){
 	$text = preg_replace('/\n/i', "\n".$prefix, $text);
@@ -39,6 +40,7 @@ function blockToCode($block){
 	}
 	if($block->nodeName != 'block'){
 		echo "xml Wrong";
+		echo $block->nodeName;
 		return '';
 	}
 	$type = $block->getAttribute('type');
@@ -107,14 +109,15 @@ function xmlToCode($xmlDoc){
 			$blockr = $blockr->lastChild;
 		}
 	}
+	global $string;
 	$string = join("\n",$definitions).$code;	
-	echo $string;
+	return $string;
 	
 	//$string = preg_replace('/[\n]+/mi', '\n', $string);
 	//$string = preg_replace('/[ ]+/mi', ' ',$string);
-	$_SESSION['file'] = $string;
+	//$_SESSION['file'] = $string;
 
-	header('Location:../gcc/compile.php'); 
+	//header('Location:../gcc/compile.php'); 
 
 }
 
@@ -771,137 +774,28 @@ function display_channel($block){
 */
 function main(){
 	//first check if the variable is properly transferred
-	if (isset($_GET['xmlText'])) {
+	if (isset($_POST['xmlText'])) {
     // Escape any html characters
 	//Get the xml file
-	$file = $_GET['xmlText'];
+	$file = $_POST['xmlText'];
 	//removes all the blank spaces
 	$file = preg_replace('/>[ ]*</mi', '><', $file); 
-
+	//print_r($file);
 	//Instantiates and Loads the xml File
 	$xmlDoc = new DOMDocument();
 	$xmlDoc->loadXML($file);
 	//actual shit to do
 	
-	xmlToCode($xmlDoc);
+	echo xmlToCode($xmlDoc);
+
+	
+	global $string;
+
+	$_SESSION['file'] = $string;
+
+	header('Location:../gcc/compile.php'); 
+}else{
+	echo "the fuck";
 }
 }
 main();
-
-//$searchNode = $xmlDoc->getElementsByTagName('block')->item(0);
-//echo textvalue($searchNode);
-/*
-function valueToCode($block,$name,$order){
-	$x = getNode($block,'value');
-	if(!$x){
-		echo "Something went wrong!!!";
-	}
-	$value = $block->childNodes[$x];
-
-}
-
-
-
-
-function getNode($node,$tag){
-	static $i=0;
-	$node = $node->firstChild;
-	if($node->nodeName != $tag){
-		$i++;
-		$node->nextSibling;
-	}else{
-		return $i; 
-	}
-	return null
-}
-
-function getNodeTypes($node,$type){
-	if($node->hasAttributes()){
-		return $node->getAttribute($type);
-	}
-return null;
-}
-
-function getValues($node){
-if($node!=null){
-	if($node->nodeName == "value"){
-		$field =$node->childNodes->item(0);
-		$field = $field->nextSibling;
-		$field = $field->childNodes->item(0);
-		$field = $field->nextSibling;
-		//echo $field->nodeName;
-		$value = $field->nodeValue;
-		$value = $value ? '1': '0';
-		return $value;
-
-	}else{
-		return	'0';
-	}
-	}
-
-return null;
-}
-
-function getStatements($node){
-	if($node!= null){
-	if($node->nodeName == "statement"){
-		$node->firstChild;
-	}else{
-		return "\n";
-	}
-	}
-	return null;
-}
-
-function control_if($statements,$value){
-
-	$statement = getStatements($statements);
-	$values = getValues($value);
-
-	echo "if(".$values."){\n".$statement."}";
-
-}
-
-function shownode($x){
-	if($x->hasChildNodes()){
-		$p = $x->firstChild;
-		if(getNodeName($p)){
-			if($p->nodeName == "block"){
-				if($p->getAttribute('type') == 'controls_if'){
-					$value = $p->firstChild;
-					while($value != NULL){
-						if($value->nodeName == '#text')
-							$value = $value->nextSibling;
-						else{
-							//echo $value->nodeName;
-							break;
-						}
-					}
-					//if($value != NULL){
-					 $statements = $value->nextSibling;
-					while($statements != NULL){
-						if($statements->nodeName != '#text'){
-							$statements = $statements->nextSibling;	
-						}else{
-							//echo $statements->nodeName;
-							break;
-						}
-					}
-					//}
-					control_if($statements,$value);
-				}
-				
-			} 
-		  	echo '\n';
-		}
-	}
-}
-$searchNode = $xmlDoc->getElementsByTagName('xml')->item(0);
-removeIndents($searchNode);
-shownode($searchNode);
-//$sibing = $searchNode->nextSibling;
-
-echo "<pre>";
-print_r($file);
-echo "</pre>";
-*/

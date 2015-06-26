@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start(); 
 $cc = "avr-gcc -g";
 $cc2 = "avr-objcopy";
 $file = $_SESSION['file'];
@@ -27,13 +27,16 @@ if(!$return){
 		if($return3){
 			print_r($output3);
 		}
+		else{
+			echo "<script>alert('lol');</script>";
+			$_SESSION['filename'] = $fileoutput;
+			header('Location:../gcc/download.php'); 
+		}
 	}else{
 		print_r($output2);
+		header('Location:../'); 
 	}
 }else{
 	echo "<pre>".print_r($output)."</pre>";
+	header('Location:../'); 
 }
-
-$filer = file_get_contents($fileinput);
-
-echo "<pre>".$filer."</pre>";

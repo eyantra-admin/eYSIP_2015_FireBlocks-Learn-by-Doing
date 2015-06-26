@@ -24,7 +24,7 @@
             <td class="tabmin">&nbsp;</td>
             <td id="tab_xml" class="taboff">XML</td>
             <td class="tabmax">
-              <button id="parseButton"  onclick="parseXml()" class="text" title="...">
+              <button id="parseButton" data-link="{{ url('/parsing') }}" class="text" title="...">
                Parse
               </button>
               <button id="trashButton" class="notext" title="...">
