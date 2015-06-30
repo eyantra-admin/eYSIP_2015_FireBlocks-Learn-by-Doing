@@ -53,3 +53,20 @@ Blockly.Blocks['back_turn'] = {
     this.setTooltip('');
   }
 };
+
+Blockly.Blocks['velocity'] = {
+  init: function() {
+    this.appendValueInput("left")
+        .setCheck("Number")
+        .appendField("velocity");
+    this.appendValueInput("right")
+        .setCheck("Number")
+        .setAlign(Blockly.ALIGN_RIGHT);
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(290);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};

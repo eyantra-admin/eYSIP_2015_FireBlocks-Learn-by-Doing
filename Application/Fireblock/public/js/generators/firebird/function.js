@@ -15,22 +15,42 @@ Blockly.Firebird['pin'] = function(block) {
 };
 Blockly.Firebird['set_item'] = function(block) {
   // Variable getter.
+  var argument = block.getFieldValue('specifier');
  var argument0 = block.getFieldValue('polarity');
   var argument1 = block.getFieldValue('type');
   var argument2= block.getFieldValue('NAME');
-   var arg =Blockly.Firebird.valueToCode(block, 'input', Blockly.Firebird.ORDER_NONE);
-   var code=argument0+' '+argument1 + ' ' + argument2 + ' = ' + arg + ';' +'\n';
+  var argument3 = block.getFieldValue('size');
+  if(argument == 'none'){
+    argument='';
+  }else{
+    argument += ' ';
+  }
+  if(argument3 == 'none'){
+    argument3='';
+  }else{
+    argument3 += ' ';
+  }
+  if(argument0 == 'signed'){
+    argument0 = '';
+  }else{
+    argument0 += ' ';
+  }
+
+   var arg =Blockly.Firebird.valueToCode(block, 'input', Blockly.Firebird.ORDER_NONE) || 0;
+   if(!arg){
+    arg = '';
+   }else{
+    arg = ' = ' + arg;
+   }
+   var code= argument+ argument0+ argument3 + argument1 + ' ' + argument2 + arg + ';' +'\n';
    return code;
 };
 
 Blockly.Firebird['register'] = function(block) {
   var arg0=block.getFieldValue('register');
   var arg1=block.getFieldValue('set/reset'); 
-  var arg2=block.getFieldValue('hex_value'); 
+  var arg2=Blockly.Firebird.valueToCode(block, 'regex', Blockly.Firebird.ORDER_MULTIPLICATIVE);
 
-  if(!(arg2.length ==4 && arg2.substr(0,2) == '0x' && arg2.substr(2,2).match('^[0-9A-F][0-9A-F]'))){
-    alert('give hex value');
-  }
 
   if(arg1=='set'){
     arg1='|';
@@ -99,7 +119,7 @@ Blockly.Firebird['register'] = function(block) {
   var returnType = returnValue ? 'dynamic' : 'void';
   var args = [];
   for (var x = 0; x < block.arguments_.length; x++) {
-    args[x] = block.arguments2_[x].substr(0,block.arguments2_[x].indexOf(' '))+ ' ' +Blockly.Firebird.variableDB_.getName(block.arguments_[x],
+    args[x] = block.arguments2_[x].substr(0,block.arguments2_[x].lastIndexOf(' '))+ ' ' +Blockly.Firebird.variableDB_.getName(block.arguments_[x],
         Blockly.Variables.NAME_TYPE);
   }
   var code = returnType + ' ' + funcName + '(' + args.join(', ') + ') {\n' +
@@ -180,7 +200,7 @@ Blockly.Firebird['hex']  = function(block){
   if(!(value.length ==4 && value.substr(0,2) == '0x' && value.substr(2,2).match('^[0-9A-F][0-9A-F]'))){
     alert('give hex value');
   }
-  return value;
+  return [value, Blockly.Firebird.ORDER_MULTIPLICATIVE];
 };
 
 Blockly.Firebird['incl_ude'] = function(block) {
@@ -193,7 +213,11 @@ Blockly.Firebird['incl_ude'] = function(block) {
 Blockly.Firebird['define'] = function(block) {
   var arg0=block.getFieldValue('name');
   var arg1=block.getFieldValue('value');
-  var code ="#define "+arg0+" "+arg1;
+  if(arg0 == 'F_CPU'){
+    Blockly.Firebird['defineFCPU'] = "#define "+arg0+" "+arg1+ "\n";
+    return '';
+  }
+  var code ="#define "+arg0+" "+arg1+ "\n";
   return code;
 };
 

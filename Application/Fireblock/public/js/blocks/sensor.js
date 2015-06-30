@@ -11,7 +11,7 @@ Blockly.Blocks['sensor_white'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldDropdown([["middle", "center"], ["left", "left"], ["right", "right"]]), "line_sensor")
         .appendField("white line sensor");
-    this.setOutput(true, "null");
+    this.setOutput(true);
     this.setTooltip('');
   }
 };
@@ -35,7 +35,7 @@ Blockly.Blocks['sensor_ir'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldDropdown([["front", "ADC_Conversion(6)"], ["left", "ADC_Conversion(4)"], ["right", "ADC_Conversion(8)"], ["front_left", "ADC_Conversion(5)"], ["front_right", "ADC_Conversion(7)"], ["back", "spi_master_tx_and_rx(6)"], ["back_left", "spi_master_tx_and_rx(7)"], ["back_right", "spi_master_tx_and_rx(5)"]]), "ir")
         .appendField("IR sensor");
-    this.setOutput(true,"String");
+    this.setOutput(true);
     this.setTooltip('');
   }
 };

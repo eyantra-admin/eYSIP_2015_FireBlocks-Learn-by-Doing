@@ -20,7 +20,7 @@ Blockly.Firebird['sensor_white'] = function(block) {
       break;
    
   }
- return [code,Blockly.Firebird.ORDER_MULTIPLICATIVE];
+ return [code, Blockly.Firebird.ORDER_MULTIPLICATIVE];
 };
 
 Blockly.Firebird['sensor_sharp'] = function(block) {
@@ -45,7 +45,7 @@ Blockly.Firebird['sensor_sharp'] = function(block) {
       break;
    
   }
- return [code,Blockly.Firebird.ORDER_MULTIPLICATIVE];
+ return [code, Blockly.Firebird.ORDER_MULTIPLICATIVE];
 };
 
 Blockly.Firebird['sensor_ir'] = function(block) {
@@ -79,5 +79,5 @@ Blockly.Firebird['sensor_ir'] = function(block) {
       break;
    
   }*/
- return [code,Blockly.Firebird.ORDER_MULTIPLICATIVE];
+ return [code, Blockly.Firebird.ORDER_MULTIPLICATIVE];
 };

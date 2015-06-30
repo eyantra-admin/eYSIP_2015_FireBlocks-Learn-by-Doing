@@ -476,3 +476,11 @@ Blockly.Firebird['math_random_float'] = function(block) {
       'import \'Firebird:math\' as Math;';
   return ['new Math.Random().nextDouble()', Blockly.Firebird.ORDER_UNARY_POSTFIX];
 };
+
+
+Blockly.Firebird['type_casting'] = function(block){
+  var value = Blockly.Firebird.valueToCode(block,'VAL', Blockly.Firebird.ORDER_ATOMIC);
+  var type = block.getFieldValue('TYPECAST');
+  var code = '('+ type +') '+ value;
+  return [code, Blockly.Firebird.ORDER_ATOMIC];
+};

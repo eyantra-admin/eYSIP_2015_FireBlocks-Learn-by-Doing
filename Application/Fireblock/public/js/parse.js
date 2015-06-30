@@ -1,6 +1,12 @@
 'use strict'
 
-
+/*
+*Function : click butoon event.
+*
+*
+*
+*
+*/
 $(document).ready(function(){
     $('#parseButton').click(function(){
       var xmlDom = Blockly.Xml.workspaceToDom(Code.workspace);
@@ -15,8 +21,8 @@ $(document).ready(function(){
       processData: false,
       success:  function(data){
         //alert("---"+data);
-        //alert(data);
-        window.open("gcc/compile.php");
+        alert(data);
+        //window.open("gcc/compile.php");
       },
       error:  function(data){
         alert("Something wrong");

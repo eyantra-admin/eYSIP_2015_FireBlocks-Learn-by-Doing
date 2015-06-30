@@ -11,12 +11,10 @@ Blockly.Blocks['register'] = {
   init: function() {
     this.setHelpUrl('http://www.example.com/');
     this.setColour(330);
-    this.appendDummyInput()
+    this.appendValueInput('regex')
         .appendField("Register:")
         .appendField(new Blockly.FieldTextInput("DDR"), "register")
         .appendField(new Blockly.FieldDropdown([["set", "set"], ["reset", "reset"],["none","none"]]), "set/reset")
-        .appendField(new Blockly.FieldTextInput("Hex_Value"), "hex_value");
-    this.setInputsInline(true);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');
@@ -52,10 +50,12 @@ Blockly.Blocks['set_item'] = {
     this.setHelpUrl('http://www.example.com/');
     this.setColour(330);
     this.appendDummyInput()
-        .appendField("set_variable ");
+        .appendField("set_variable ")
+        .appendField(new Blockly.FieldDropdown([["none", "none"], ["extern", "extern"], ["volatile", "volatile"], ["register","register"]]), "specifier")
+        .appendField(new Blockly.FieldDropdown([["signed", "signed"], ["unsigned", "unsigned"]]), "polarity");
     this.appendValueInput("input")
         .appendField("type")
-        .appendField(new Blockly.FieldDropdown([["signed", "signed"], ["unsigned", "unsigned"]]), "polarity")
+        .appendField(new Blockly.FieldDropdown([["none", "none"], ["long ", "long"], ["short", "short"]]), "size")
         .appendField(new Blockly.FieldDropdown([["int ", "int"], ["char", "char"], ["float", "float"], ["double", "double"]]), "type")
         .appendField(new Blockly.FieldTextInput("variable_name"), "NAME");
     this.setPreviousStatement(true, "null");
@@ -632,7 +632,7 @@ Blockly.Blocks['function_defnoreturn'] = {
           ' ' + this.arguments_.join(', ');
     }
     for (var i=0; i< this.arguments_.length;i++){
-      this.arguments_[i] = this.arguments_[i].substr(this.arguments_.indexOf(' '));
+      this.arguments_[i] = this.arguments_[i].substr(this.arguments_[i].lastIndexOf(' ')+1);
     }
     this.setFieldValue(paramString, 'PARAMS');
   },
@@ -699,7 +699,7 @@ Blockly.Blocks['function_defnoreturn'] = {
       var paramBlock = Blockly.Block.obtain(workspace, 'function_mutatorarg');
       paramBlock.initSvg();
       paramBlock.setFieldValue(this.arguments_[i],'NAME');
-      paramBlock.setFieldValue(this.arguments2_[i].substr(0,this.arguments2_[i].indexOf(' ')),'TYPES');
+      paramBlock.setFieldValue(this.arguments2_[i].substr(0, this.arguments2_[i].lastIndexOf(" ")),'TYPES');
       // Store the old location.
       paramBlock.oldLocation = i;
       connection.connect(paramBlock.previousConnection);
@@ -719,12 +719,14 @@ Blockly.Blocks['function_defnoreturn'] = {
     // Parameter list.
     this.arguments_ = [];
     this.arguments2_ = [];
+    this.types = [];
     this.varnames_ = [];
     this.paramIds_ = [];
     var paramBlock = containerBlock.getInputTargetBlock('STACK');
     while (paramBlock) {
       var total = paramBlock.getFieldValue('TYPES') +" "+ paramBlock.getFieldValue('NAME');
       this.varnames_.push(paramBlock.getFieldValue('NAME'));
+      this.types.push(paramBlock.getFieldValue('TYPES'));
       this.arguments_.push(total);
       this.arguments2_.push(total);
       this.paramIds_.push(paramBlock.id);

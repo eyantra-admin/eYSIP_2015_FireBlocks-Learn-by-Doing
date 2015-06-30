@@ -34,27 +34,19 @@ Blockly.Blocks['display_channel'] = {
   init: function() {
     this.setHelpUrl('http://www.example.com/');
     this.setColour(65);
-    this.appendValueInput("Channel")
+    this.appendValueInput("row")
+        .appendField("print")
+        .appendField("row")
+    this.setInputsInline(true);
+    this.appendValueInput("column")
+        .appendField("column")
+    this.setInputsInline(true);
+    this.appendValueInput("channel")
         .setCheck("String")
-        .appendField("display value of");
+        .appendField("digits")
+        .appendField(new Blockly.FieldTextInput("3"),"digit");
     this.setPreviousStatement(true,"null");
     this.setNextStatement(true,"null");
-    this.setTooltip('');
-  }
-};
-
-Blockly.Blocks['logic_compare1'] = {
-  init: function() {
-    this.setHelpUrl('http://www.example.com/');
-    this.setColour(210);
-    this.appendValueInput("A")
-        .setCheck("null");
-    this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown([["=", "EQ"], ["!=", "NE"], ["<", "LS"], ["<=", "LE"], [">", "GT"], [">=", "GE"]]), "options");
-    this.appendValueInput("B")
-        .setCheck("null");
-    this.setInputsInline(true);
-    this.setOutput(true);
     this.setTooltip('');
   }
 };

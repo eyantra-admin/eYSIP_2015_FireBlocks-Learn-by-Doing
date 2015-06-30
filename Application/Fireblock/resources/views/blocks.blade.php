@@ -59,6 +59,7 @@
       <block type="controls_if"></block>
       <block type="logic_compare"></block>
       <block type="logic_operation"></block>
+      <block type="bitwise_operator"></block>
       <block type="logic_negate"></block>
       <block type="logic_boolean"></block>
       <block type="logic_null"></block>
@@ -72,13 +73,36 @@
     <category id="catDisplay">
       <block type="display_init"></block>
       <block type="display_cursor"></block>
-      <block type="display_channel"></block>
+      <block type="display_channel">
+        <value name="row">
+          <block type="math_number" id="23">
+            <field name="NUM">0</field>
+          </block>
+        </value>
+        <value name="column">
+          <block type="math_number" id="23">
+            <field name="NUM">0</field>
+          </block>
+        </value>
+      </block>
     </category>
     <category id="catMotion">
       <block type="motion"></block>
       <block type="turn"></block>
       <block type="soft_turn"></block>
       <block type="back_turn"></block>
+      <block type="velocity">
+        <value name="left">
+          <block type="math_number">
+            <field name="NUM">255</field>
+          </block>
+        </value>
+        <value name="right">
+          <block type="math_number">
+            <field name="NUM">255</field>
+          </block>
+        </value>
+      </block>
     </category>
     <category id="catPosition">
       <block type="position_motion">
@@ -197,6 +221,7 @@
         </value>
       </block>
       <block type="math_random_float"></block>
+      <block type="type_casting"></block>
     </category>
     <category id="catText">
       <block type="text"></block>
@@ -327,6 +352,9 @@
     <sep></sep>
     <category id="catVariables" custom="VARIABLE"></category>
     <category id="catFunctions" custom="PROCEDURE"></category>
+    <category id="catInters">
+      <block type="int_serv_routine"><block>
+    </category>
     <category id="catBasics">
       <block type="function_defnoreturn"></block>
       <block type="function_defreturn"></block>

@@ -361,6 +361,22 @@ Blockly.Blocks['logic_operation'] = {
   }
 };
 
+Blockly.Blocks['bitwise_operator'] = {
+  init: function() {
+    this.appendValueInput("A")
+        .setCheck("Boolean");
+    this.appendValueInput("B")
+        .setCheck("Boolean")
+        .appendField(new Blockly.FieldDropdown([["&", "BITAND"], ["|", "BITOR"]]), "OP");
+    this.setInputsInline(true);
+    this.setOutput(true, "Boolean");
+    this.setColour(230);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+
 Blockly.Blocks['logic_negate'] = {
   /**
    * Block for negation.

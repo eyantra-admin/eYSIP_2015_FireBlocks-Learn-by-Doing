@@ -107,9 +107,12 @@ Blockly.Firebird.finish = function(code) {
   var imports = [];
   var variables =[];
   var definitions = [];
+  var fcpu ='';
   for (var name in Blockly.Firebird.definitions_) {
     var def = Blockly.Firebird.definitions_[name];
-    if (def.match(/^#include/)) {
+    if(name == 'defineFCPU'){
+      fcpu = def;
+    } else if (def.match(/^#include/)) {
       imports.push(def);
     } else if (name === 'variables') {
       variables.push(def);
@@ -117,7 +120,7 @@ Blockly.Firebird.finish = function(code) {
       definitions.push(def);
     }
   }
-  var allDefs = imports.join('\n') + '\n\n' + definitions.join('\n');
+  var allDefs = fcpu + imports.join('\n')+"\n#include <avr/interrupt.h>\n#include <avr/io.h>\n#include <util/delay.h>" + '\n\n' + definitions.join('\n');
   return allDefs.replace(/\n\n+/g, '\n\n').replace(/\n*$/, '\n\n\n') + code +'\n';
 };
 

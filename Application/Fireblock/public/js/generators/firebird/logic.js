@@ -135,21 +135,34 @@ Blockly.Firebird['buzzer'] = function(block) {
 };*/
 
 Blockly.Firebird['delay_ms'] = function(block) {
-  Blockly.Firebird.definitions_['include_delay']= '#include<util/delay.h>';
   var delay_time = Blockly.Firebird.valueToCode(block, 'delay_value', Blockly.Firebird.ORDER_NONE) || '1000';
   var code = '_delay_ms(' + delay_time + ');\n';
   return code;
 };
 
 Blockly.Firebird['buzzer_on'] = function(block) {
-      Blockly.Firebird.definitions_['include_firebird']= '#include"firebird.h"';
+      Blockly.Firebird.definitions_['include_firebird']= '#include "firebird.h"';
   var code = 'buzzer_on();\n';
   return code;
 };
 
 Blockly.Firebird['buzzer_off'] = function(block) {
-   Blockly.Firebird.definitions_['include_firebird']= '#include"firebird.h"';
+   Blockly.Firebird.definitions_['include_firebird']= '#include "firebird.h"';
       //Blockly.Firebird.definitions_('port_restore') = 'port_restore = 0;\n'
   var code = 'buzzer_off();\n';
   return code;
+};
+
+
+Blockly.Firebird['bitwise_operator'] = function(block) {
+  var A = Blockly.Firebird.valueToCode(block,"A",Blockly.Firebird.ORDER_NONE);
+  var B = Blockly.Firebird.valueToCode(block,"B",Blockly.Firebird.ORDER_NONE);
+  var OP = block.getFieldValue('OP');
+  var code ='';
+  switch(OP){
+    case 'BITAND':{code = A+' & '+B;break;}
+    case 'BITOR':{code = A+' | '+B;break;}
+  }
+  
+  return [code, Blockly.Firebird.ORDER_CONDITIONAL];
 };

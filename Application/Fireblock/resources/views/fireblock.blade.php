@@ -16,6 +16,7 @@
   <script type="text/javascript" src="{{ URL::asset('/js/generators/firebird.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('/js/generators/firebird/display.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('/js/generators/firebird/input.js') }}"></script>
+  <script type="text/javascript" src="{{ URL::asset('/js/generators/firebird/interrupt.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('/js/generators/firebird/logic.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('/js/generators/firebird/loops.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('/js/generators/firebird/math.js') }}"></script>
@@ -37,6 +38,7 @@
   <script type="text/javascript" src="{{ URL::asset('/js/blocks/position.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('/js/blocks/procedures.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('/js/blocks/sensor.js') }}"></script>
+  <script type="text/javascript" src="{{ URL::asset('/js/blocks/interrupt.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('/js/blocks/text.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('/js/blocks/variables.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('/js/code.js') }}"></script>

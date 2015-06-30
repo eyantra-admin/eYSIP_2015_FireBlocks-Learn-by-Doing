@@ -34,9 +34,9 @@ if(!$return){
 		}
 	}else{
 		print_r($output2);
-		header('Location:../'); 
+		
 	}
 }else{
 	echo "<pre>".print_r($output)."</pre>";
-	header('Location:../'); 
+
 }

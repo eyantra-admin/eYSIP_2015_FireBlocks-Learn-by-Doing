@@ -25,6 +25,7 @@ Blockly.Firebird['position_motion'] = function(block) {
       break;
    
   }
+   Blockly.Firebird.definitions_['include_firebird']= '#include "firebird.h"';
  
     return (code);
 };
@@ -49,7 +50,7 @@ Blockly.Firebird['position_turn'] = function(block) {
       break;
    
   }
- 
+  Blockly.Firebird.definitions_['include_firebird']= '#include "firebird.h"';
     return (code);
 };
 
@@ -73,7 +74,7 @@ Blockly.Firebird['position_turn_soft'] = function(block) {
       break;
    
   }
- 
+  Blockly.Firebird.definitions_['include_firebird']= '#include "firebird.h"';
     return (code);
 };
 
@@ -82,7 +83,7 @@ Blockly.Firebird['position_turn_back'] = function(block) {
   var operator = block.getFieldValue('forward');
   var code;
   var arg;
-  
+   Blockly.Firebird.definitions_['include_firebird']= '#include "firebird.h"';
       arg = Blockly.Firebird.valueToCode(block, 'back_turn',
         Blockly.Firebird.ORDER_MULTIPLICATIVE) || '0';
  

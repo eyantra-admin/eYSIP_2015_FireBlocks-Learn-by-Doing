@@ -432,3 +432,16 @@ Blockly.Blocks['math_random_float'] = {
     this.setTooltip(Blockly.Msg.MATH_RANDOM_FLOAT_TOOLTIP);
   }
 };
+
+
+Blockly.Blocks['type_casting'] = {
+  init: function() {
+    this.appendValueInput("VAL")
+        .appendField("type cast")
+        .appendField(new Blockly.FieldTextInput("int"), "TYPECAST");
+    this.setOutput(true);
+    this.setColour(230);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
