@@ -88,19 +88,19 @@ Blockly.Firebird['display_channel'] = function(block) {
 	case 'spi_master_tx_and_rx(7)':
       code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
       break;
-  case 'sharp_fr(9)':
+  case 'ADC_Conversion(9)':
       code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
       break;
-  case 'sharp_fr(10)':
+  case 'ADC_Conversion(10)':
       code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
       break;
-	case 'sharp_fr(11)':
+	case 'ADC_Conversion(11)':
       code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
       break;
-  case 'sharp_fr(12)':
+  case 'ADC_Conversion(12)':
       code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
 	  break;
-	case 'sharp_fr(13)':
+	case 'ADC_Conversion(13)':
       code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
   }
  

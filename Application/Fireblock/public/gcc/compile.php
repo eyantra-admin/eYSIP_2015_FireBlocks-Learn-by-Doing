@@ -7,13 +7,13 @@ $fileinput = "loadCfile.c";
 $fileinput2 = "loadCfile.o";
 $fileinput3 = "loadCfile.elf";
 $fileoutput = "loadCfile.hex";
-$command1 = $cc." -mmcu=atmega2560 -c ".$fileinput;
-$command2 = $cc." -mmcu=atmega2560 -o ".$fileinput3." ".$fileinput2;
-$command3 = $cc2." -j .text -j .data -O ihex ".$fileinput3." ".$fileoutput;
+$command1 = $cc." -mmcu=atmega2560 -c ".$fileinput." 2>&1";
+$command2 = $cc." -mmcu=atmega2560 -o ".$fileinput3." ".$fileinput2." 2>&1";
+$command3 = $cc2." -j .text -j .data -O ihex ".$fileinput3." ".$fileoutput." 2>&1";
 
-$output = array();
-$output2 = array();
-$output3 = array();
+$output;
+$output2;
+$output3;
 
 $files = fopen($fileinput,"w");
 fwrite($files,$file);

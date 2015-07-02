@@ -30,7 +30,11 @@ class CompilerController extends Controller {
 	 */
 	public function compile()
 	{
-		
+		/*if(Session::has('cFile')){
+			$file = Session::get('cFile');
+			echo $file;
+		}*/
+		echo "hello";
 	}
 
 }

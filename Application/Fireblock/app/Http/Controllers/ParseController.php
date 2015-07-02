@@ -22,6 +22,7 @@ class ParseController extends Controller {
 	*/
 	public static $definitions = array();
 	public static $strings;
+	public static $fcpu;
 	/**
 	 * Create a new controller instance.
 	 *
@@ -100,6 +101,7 @@ class ParseController extends Controller {
 			case 'variables_set':{return $this->variables_set($block);break;}
 			case 'variables_get':{return $this->variables_get($block);break;}
 			case 'int_serv_routine':{return $this->isRoutine($block);break;}
+			case 'int_signal':{return $this->isSignal($block);break;}
 			default : {echo "not defined in blockToCode ".$block->getAttribute('type');}
 		}
 	}
@@ -119,7 +121,7 @@ class ParseController extends Controller {
 			}
 		}
 		//global $string;
-		 self::$strings = join("\n",self::$definitions).$code;	
+		 self::$strings = self::$fcpu."\n".join("\n",self::$definitions).$code;	
 		//return $string;
 		
 		//$string = preg_replace('/[\n]+/mi', '\n', $string);
@@ -328,7 +330,7 @@ class ParseController extends Controller {
 		if($mode == 'UNTIL'){
 			$arg = '!'.$arg;
 		}
-		return "while(".$arg."){\n".$statements."}";
+		return "while(".$arg."){".$statements."}";
 	}
 
 
@@ -343,7 +345,7 @@ class ParseController extends Controller {
 
 	public function textvalue($block){
 		$code = $this->getFieldValue($block,"TEXT");
-		return "\"".$code."\";";
+		return "\"".$code."\"";
 	}
 
 	//IO
@@ -474,11 +476,11 @@ class ParseController extends Controller {
 		$arg = $this->getFieldValue($block,"sharp");
 		$code = "";
 	    switch ($arg) {
-	     case 'fr':{$code = 'sharp_fr(11)';break;}
-	     case 'lf':{$code = 'sharp_fr(9)';break;}
-		 case 'rf':{$code = 'sharp_fr(13)';break;}
-		 case 'ld':{$code = 'sharp_fr(10)';break;}
-		 case 'rd':{$code = 'sharp_fr(12)';break;}   
+	     case 'fr':{$code = 'ADC_Conversion(11)';break;}
+	     case 'lf':{$code = 'ADC_Conversion(9)';break;}
+		 case 'rf':{$code = 'ADC_Conversion(13)';break;}
+		 case 'ld':{$code = 'ADC_Conversion(10)';break;}
+		 case 'rd':{$code = 'ADC_Conversion(12)';break;}   
 	  	}
 
 	  return $code;
@@ -649,6 +651,9 @@ class ParseController extends Controller {
 
 		if($arg2=="set"){
 			$arg2="|";
+		}else if($arg2=='none'){
+			$code = $arg1." = ".$arg3.";";
+			return $code;
 		}
 		else{
 			$arg2="&";
@@ -790,11 +795,11 @@ class ParseController extends Controller {
 	public function def_ine($block){
 		$defval = $this->getFieldValue($block,"name");
 		$defreplace = $this->getFieldValue($block,"value");
-/*		if($defval =='F_CPU'){
+		if($defval =='F_CPU'){
 			
-			//$definitions['def_fcpu'] = "#define ".$defval." ".$defreplace;
-			return null;
-		}*/
+			self::$fcpu = "#define ".$defval." ".$defreplace;
+			return '';
+		}
 		return "#define ".$defval." ".$defreplace."\n";
 
 	}
@@ -863,19 +868,19 @@ class ParseController extends Controller {
 			case 'spi_master_tx_and_rx(7)':
 		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
 		      break;
-		  case 'sharp_fr(9)':
+		  case 'ADC_Conversion(9)':
 		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
 		      break;
-		  case 'sharp_fr(10)':
+		  case 'ADC_Conversion(10)':
 		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
 		      break;
-			case 'sharp_fr(11)':
+			case 'ADC_Conversion(11)':
 		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
 		      break;
-		  case 'sharp_fr(12)':
+		  case 'ADC_Conversion(12)':
 		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
 			  break;
-			case 'sharp_fr(13)':
+			case 'ADC_Conversion(13)':
 		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
 		      break;
 		   default : 
@@ -911,6 +916,12 @@ class ParseController extends Controller {
 			$attribute = '';
 		}
 		return 'ISR('.$vector.$attribute.'){'.$bloc.'}';
+	}
+
+	public function isSignal($block){
+		$vector = $this->getFieldValue($block,"VECTOR");
+		$bloc = $this->statementToCode($block, "BLOC");
+		return 'SIGNAL('.$vector.'){'.$bloc.'}';
 	}
 
 	public function type_casting($block){

@@ -21,8 +21,8 @@ $(document).ready(function(){
       processData: false,
       success:  function(data){
         //alert("---"+data);
-        alert(data);
-        //window.open("gcc/compile.php");
+        //alert(data);
+        window.open("gcc/compile.php");
       },
       error:  function(data){
         alert("Something wrong");

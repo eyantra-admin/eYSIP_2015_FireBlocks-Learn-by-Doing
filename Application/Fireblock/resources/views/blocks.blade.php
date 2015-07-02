@@ -27,6 +27,8 @@
               <button id="parseButton" data-link="{{ url('/parsing') }}" class="text" title="...">
                Parse
               </button>
+              <input type="file" id="files" name="open" >
+              <button id='openButton' class="text">Open Xml</button>
               <button id="trashButton" class="notext" title="...">
                 <img src="{{ asset('/media/1x1.gif') }}" class="trash icon21">
               </button>
@@ -39,7 +41,7 @@
               <button id="saveButton" class="text" onclick="saveTextAsFile()" title="Download and Save C File">
               Save
               </button>
-              <button id="execButton" onclick="sendTextAsFile()">Execute</button>
+              <button id="execButton" onclick="saveXml()">Xml Save</button>
             </td>
           </tr>
         </table>
@@ -352,8 +354,9 @@
     <sep></sep>
     <category id="catVariables" custom="VARIABLE"></category>
     <category id="catFunctions" custom="PROCEDURE"></category>
-    <category id="catInters">
+    <category id="catInterrupts">
       <block type="int_serv_routine"><block>
+      <block type="int_signals"><block>
     </category>
     <category id="catBasics">
       <block type="function_defnoreturn"></block>

@@ -16,7 +16,3 @@ Route::get('/', 'FireblockController@index');
 
 Route::post('parsing', 'ParseController@parse');
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);

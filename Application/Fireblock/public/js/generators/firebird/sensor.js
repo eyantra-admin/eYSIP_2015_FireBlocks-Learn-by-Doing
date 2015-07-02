@@ -29,19 +29,19 @@ Blockly.Firebird['sensor_sharp'] = function(block) {
   var code;
    switch (arg) {
     case 'fr':
-      code = 'sharp_fr(11)';
+      code = 'ADC_Conversion(11)';
       break;
     case 'lf':
-      code = 'sharp_fr(9)';
+      code = 'ADC_Conversion(9)';
       break;
 	 case 'rf':
-      code = 'sharp_fr(13)';
+      code = 'ADC_Conversion(13)';
       break;
 	 case 'ld':
-      code = 'sharp_fr(10)';
+      code = 'ADC_Conversion(10)';
       break;
 	 case 'rd':
-      code = 'sharp_fr(12)';
+      code = 'ADC_Conversion(12)';
       break;
    
   }

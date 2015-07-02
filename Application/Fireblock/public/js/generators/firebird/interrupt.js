@@ -15,3 +15,9 @@ Blockly.Firebird['int_serv_routine'] = function(block){
 	}
 	return "ISR("+vector+attribute+"){\n"+bloc+"\n}";
 };
+
+Blockly.Firebird['int_signal'] = function(block){
+	var vector = block.getFieldValue('VECTOR');
+	var bloc = Blockly.Firebird.statementToCode(block,'BLOC');
+	return "SIGNAL("+vector+"){\n"+bloc+"\n}";
+};

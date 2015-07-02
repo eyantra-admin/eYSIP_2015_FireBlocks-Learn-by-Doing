@@ -162,7 +162,7 @@ Blockly.Blocks['set_item'] = {
     for (var i = 0; i < this.arguments_.length; i++) {
       var paramBlock = Blockly.Block.obtain(workspace, 'function_mutatorarg');
       paramBlock.initSvg();
-      paramBlock.setFieldValue(this.types[i] + this.arguments_[i], 'NAME');
+      paramBlock.setFieldValue(this.arguments_[i], 'NAME');
       // Store the old location.
       paramBlock.oldLocation = i;
       connection.connect(paramBlock.previousConnection);

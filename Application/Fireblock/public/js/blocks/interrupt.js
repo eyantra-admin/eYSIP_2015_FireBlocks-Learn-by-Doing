@@ -19,3 +19,16 @@ Blockly.Blocks['int_serv_routine'] = {
     this.setHelpUrl('http://www.example.com/');
   }
 };
+
+Blockly.Blocks['int_signal'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("SIGNAL")
+        .appendField(new Blockly.FieldTextInput("vector"), "VECTOR");
+    this.appendStatementInput("BLOC")
+        .setCheck(null);
+    this.setColour(290);  
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};

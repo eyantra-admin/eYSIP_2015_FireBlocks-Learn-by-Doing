@@ -165,7 +165,7 @@ Blockly.Firebird['function_defreturn'] = function(block) {
   //var returnType = returnValue ? 'dynamic' : 'void';
   var args = [];
   for (var x = 0; x < block.arguments_.length; x++) {
-    args[x] = block.arguments2_[x].substr(0,block.arguments2_[x].indexOf(' '))+ " " +block.arguments_[x];
+    args[x] = block.arguments2_[x].substr(0,block.arguments2_[x].lastIndexOf(' '))+ " " +block.arguments_[x];
         
   }
   var code = returnType + ' ' + funcName + '(' + args.join(', ') + ') {\n' +
@@ -214,7 +214,7 @@ Blockly.Firebird['define'] = function(block) {
   var arg0=block.getFieldValue('name');
   var arg1=block.getFieldValue('value');
   if(arg0 == 'F_CPU'){
-    Blockly.Firebird['defineFCPU'] = "#define "+arg0+" "+arg1+ "\n";
+    Blockly.Firebird.definitions_['defineFCPU'] = "#define "+arg0+" "+arg1+ "\n";
     return '';
   }
   var code ="#define "+arg0+" "+arg1+ "\n";

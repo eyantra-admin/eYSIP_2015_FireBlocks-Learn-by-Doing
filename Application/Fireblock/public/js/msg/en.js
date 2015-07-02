@@ -22,7 +22,7 @@ var MSG = {
   catColour: "Colour",
   catVariables: "Variables",
   catFunctions: "Functions",
-  catInters: "Interrupts",
+  catInterrupts: "Interrupts",
   catBasics: 'Basic',
   catPrecursor: 'Precursor',
   listVariable: "list",
