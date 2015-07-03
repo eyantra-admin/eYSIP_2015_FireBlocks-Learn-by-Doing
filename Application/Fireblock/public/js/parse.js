@@ -8,7 +8,7 @@
 *
 */
 $(document).ready(function(){
-    $('#parseButton').click(function(){
+    $('#runButton').click(function(){
       var xmlDom = Blockly.Xml.workspaceToDom(Code.workspace);
       var xmlText1 = Blockly.Xml.domToText(xmlDom);        
       xmlText1 = "xmlText="+xmlText1;

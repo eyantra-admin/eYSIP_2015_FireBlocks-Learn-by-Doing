@@ -58,19 +58,19 @@ int main() {
 		
 			buzzer_off();
 			forward();
-			velocity(200,175);
+			velocity(200,165);
 		}
 		if(Right_white_line < Left_white_line && flag2 == 0){
 		
 			buzzer_off();
 			forward();
-			velocity(175,200);
+			velocity(165,255);
 		}
 		if(Center_white_line > 0x28 && Left_white_line > 0x28 && Right_white_line > 0x28 && flag2 == 0){
 		
 			buzzer_off();
 			forward();
-			velocity(200,200);
+			velocity(0,0);
 		}
 	}
 

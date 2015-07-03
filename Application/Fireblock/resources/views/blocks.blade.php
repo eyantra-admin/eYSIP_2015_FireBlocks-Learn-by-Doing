@@ -24,23 +24,23 @@
             <td class="tabmin">&nbsp;</td>
             <td id="tab_xml" class="taboff">XML</td>
             <td class="tabmax">
-              <button id="parseButton" data-link="{{ url('/parsing') }}" class="text" title="...">
+             <!-- <button id="parseButton" data-link="{{ url('/parsing') }}" class="text" title="...">
                Parse
-              </button>
-              <input type="file" id="files" name="open" >
-              <button id='openButton' class="text">Open Xml</button>
-              <button id="trashButton" class="notext" title="...">
-                <img src="{{ asset('/media/1x1.gif') }}" class="trash icon21">
-              </button>
+              </button>-->
               <button id="linkButton" class="notext" title="...">
                 <img src="{{ asset('/media/1x1.gif') }}" class="link icon21">
               </button>
-              <button id="runButton" class="notext primary" title="...">
-                <img src="{{ asset('/media/1x1.gif') }}" class="run icon21">
+              <button id="runButton" class="text primary" title="...">
+                Execute
+              </button>
+              <button id="trashButton" class="text" title="...">
+                Clear
               </button>
               <button id="saveButton" class="text" onclick="saveTextAsFile()" title="Download and Save C File">
-              Save
+              Save Code
               </button>
+              <input type="file" id="files" name="open" >
+              <button id='openButton' class="text">Open Xml</button>
               <button id="execButton" onclick="saveXml()">Xml Save</button>
             </td>
           </tr>
