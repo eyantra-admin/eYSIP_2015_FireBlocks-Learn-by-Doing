@@ -1,0 +1,70 @@
+\documentclass{report}
+\usepackage{graphicx}
+\usepackage[procnames]{listings}
+\usepackage{amsmath}
+
+% Title Page
+\title{Learn By Doing - Fireblocks}
+\author{Chinmay Lad ladchinmay@gmail.com 9757409723\\Suraj Mishra premsuraj@gmail.com 8976330107\\\\Project Mentors:\\Deepa Avudiappan\\Rutja\\Amiraj Dhawan}
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter{Abstract}
+In this report, a web application based Visual Programming Language is proposed for developing a language for easier
+comprehension of Firebird V code.
+
+\chapter{Objective of the Work}
+The aim of this project is to develop a web application using Laravel Framework and design a Visual Programming Language for Firebird V. 
+Blockly library is used for generating the blocks and parsing them to corresponding C code on the front-end.On the sever side PHP is used for parsing the XML to C code.
+The final goal of this project is to deliver a web application that contains predefined blocks for writing the code for Firebird V. \\\\\\
+\begin{tabular}{ | c | c | c |}
+	\hline\hline
+	\bf Sr.No & \bf Tasks & \bf Deadline \\ 
+	\hline
+	1.) & Install Composer, Laravel, Blockly, PHP5 & 5 days \\
+	\hline
+	2.) & Define blocks same as one defined in Visual & 9 days \\
+	& Programming Language &\\
+	\hline
+	3.) & Write Code for parsing the XML file  & 6 days \\
+	& to C code on server side &\\
+	\hline	
+	4.) & Make Execute, Save and Open Button for both & 5 days \\
+	& XML and C code &\\
+	\hline
+	5.) & Make compiler to convert C file to hex & 12 days\\
+	& and provide it for download  &\\
+	\hline
+	6.) & Testing/Documentation (Usage Manual, Documented Code) & 8 days
+	\\ \hline
+
+\end{tabular} \\
+
+\chapter{Completion}
+All the tasks have been completed. The code written using the predefined blocks correctly forms the C syntax and the hex file is also 
+made and can be downloaded on the user local machine.
+\section{Task 1 - Install Composer, Laravel, Blockly, Xampp softwares}
+  \begin{itemize}
+      \item \textbf{Composer}\\
+      Run this in your terminal to get the latest Composer version:\\
+	\texttt{curl -sS https://getcomposer.org/installer | php}\\\\
+      Or if you don't have curl:\\
+	 \texttt{php -r "readfile('https://getcomposer.org/installer');" | php}\\\\
+      This installer script will simply check some php.ini settings, warn you if they are set incorrectly,\\
+      and then download the latest composer.phar in the current directory.
+      \item \textbf{Install Composer}\\
+      
+      
+  \end{itemize}
+\chapter{Results and Discussion}
+la
+\chapter{Bugs}
+la
+\chapter{Future Work}
+la
+\chapter{References}
+la
+\end{document}          
