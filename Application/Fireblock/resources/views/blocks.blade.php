@@ -5,8 +5,8 @@
     <tr>
       <td>
       	<h1>
-          <a href="{{ url('/') }}">Fireblocks</a>&rlm; &gt;
-          <a id="title">...</a>
+          <a href="/"><img alt="Brand" src="img/EyantraLogoLarge.png" width="170" height="50"></a>
+           <a style="visibility: hidden" id="title">...</a> 
     
         </h1>
       </td>
