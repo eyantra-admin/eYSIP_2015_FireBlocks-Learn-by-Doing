@@ -18,8 +18,8 @@ var MSG = {
   catLoops: "Loops",
   catMath: "Math",
   catText: "Text",
-  catLists: "Lists",
-  catColour: "Colour",
+  
+ 
   catVariables: "Variables",
   catFunctions: "Functions",
   catInterrupts: "Interrupts",

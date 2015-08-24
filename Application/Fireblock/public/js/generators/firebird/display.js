@@ -55,52 +55,8 @@ Blockly.Firebird['display_channel'] = function(block) {
   case '0' : 
       code = 'Block not connected to display value of()';
       break;
-  case 'ADC_Conversion(2)':
-      code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
-      break;
-  case 'ADC_Conversion(3)':
-      code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
-      break;
-	case 'ADC_Conversion(1)':
-      code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
-      break;
-  case 'ADC_Conversion(4)':
-      code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
-	  break;
-	case 'ADC_Conversion(5)':
-      code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
-	  break;
-	case 'ADC_Conversion(6)':
-      code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
-	  break;
-	case 'ADC_Conversion(7)':
-      code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
-	  break;
-	case 'ADC_Conversion(8)':
-      code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
-	  break;
-	case 'spi_master_tx_and_rx(5)':
-      code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
-	  break;
-	case 'spi_master_tx_and_rx(6)':
-      code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
-	  break;
-	case 'spi_master_tx_and_rx(7)':
-      code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
-      break;
-  case 'ADC_Conversion(9)':
-      code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
-      break;
-  case 'ADC_Conversion(10)':
-      code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
-      break;
-	case 'ADC_Conversion(11)':
-      code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
-      break;
-  case 'ADC_Conversion(12)':
-      code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
-	  break;
-	case 'ADC_Conversion(13)':
+  
+  default:
       code = 'lcd_print('+ row + ',' + col + ',' + arg +',' + digit + ');\n';
   }
  

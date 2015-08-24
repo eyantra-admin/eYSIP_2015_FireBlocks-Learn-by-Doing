@@ -876,7 +876,7 @@ Blockly.Blocks['function_defreturn'] = {
     this.setHelpUrl(Blockly.Msg.PROCEDURES_DEFRETURN_HELPURL);
     this.setColour(Blockly.Blocks.procedures.HUE);
     var name = Blockly.Procedures.findLegalName(
-        'function_name', this);
+        'main', this);
     var nameField = new Blockly.FieldTextInput(name,
         Blockly.Procedures.rename);
     nameField.setSpellcheck(false);
@@ -1209,6 +1209,32 @@ Blockly.Blocks['return'] = {
     this.setHelpUrl('http://www.example.com/');
   }
 };
+Blockly.Blocks['Initialise'] = {
+  init: function() {
+    this.appendValueInput("Initialise")
+        .appendField("Initialise");
+    this.setPreviousStatement(true, null);
+    this.setColour(20);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+Blockly.Blocks['devices'] = {
+  init: function() {
+    this.setHelpUrl('http://www.example.com/');
+    this.setColour(20);
+    this.appendDummyInput()
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField(new Blockly.FieldDropdown([["Buzzer", "buzz"], ["Switch", "sw"], ["Bar_graph_LEDS", "LED"],["LCD", "LCD"],["Sensors", "sen"],["Motors", "DC"],["Encoder", "enc"],["PWM", "PWM"]]), "device");
+    this.setInputsInline(true);
+    this.setOutput(true, "String");
+    this.setTooltip('');
+  }
+};
+
 
 
 Blockly.Blocks['hex'] = {
@@ -1253,3 +1279,4 @@ Blockly.Blocks['define'] = {
     this.setHelpUrl('http://www.example.com/');
   }
 };
+

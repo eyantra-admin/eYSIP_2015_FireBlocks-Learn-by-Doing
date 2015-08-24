@@ -13,6 +13,65 @@ Blockly.Firebird['pin'] = function(block) {
      // Blockly.Firebird.ORDER_UNARY_PREFIX : Blockly.Firebird.ORDER_ATOMIC;
    return [code, Blockly.Firebird.ORDER_ATOMIC];
 };
+
+Blockly.Firebird['devices'] = function(block) {
+  // Numeric value.
+  var operator = block.getFieldValue('device');
+  var code;
+  switch (operator)
+  {
+    case 'buzz':
+    Blockly.Firebird.definitions_['buzz_config_function']= 'void buzzer_pin_config (void)\n{\n\tDDRC = DDRC | 0x08;   //Setting PORTC 3 as outpt\n\tPORTC = PORTC & 0xF7;   //Setting PORTC 3 logic low to turnoff buzzer\n}\n';
+    
+    code = 'buzzer_pin_config();\n';
+      break;
+      case 'sw':
+    Blockly.Firebird.definitions_['sw_config_function']= 'void switch_config (void)\n{\n\tDDRE = DDRE & 0x7F; // PORTE 7 pin set as input\n\tPORTE = PORTE | 0x80; // PORTE7 internal pull up enabled \n}\n';
+    
+    code = 'switch_config();\n';
+      break;
+      case 'LED':
+    Blockly.Firebird.definitions_['LED_function']= 'void bar_graph_LED_config (void)\n{\n\tDDRJ = 0xFF;  //PORT J is configured as output\n\tPORTJ = 0x00; //Output is set to 0\n}\n';
+    
+    code = 'bar_graph_LED_config();\n';
+      break;
+      case 'LCD':
+    Blockly.Firebird.definitions_['LCD_function']= 'void LCD_config (void)\n{\n\tDDRC = DDRC | 0xF7; //all the LCD pins direction set as output\n\tPORTC = PORTC & 0x80; // all the LCD pins are set to logic 0 except PORTC 7\n}\n';
+    
+    code = 'LCD_config();\n';
+      break;
+      case 'sen':
+    Blockly.Firebird.definitions_['ADC_function']= 'void ADC_config (void)\n{\n\tDDRF = 0x00; //set PORTF direction as input\n\tPORTF = 0x00; //set PORTF pins floating\n\tDDRK = 0x00; //set PORTK direction as input\n\tPORTK = 0x00; //set PORTK pins floating\n}\n';
+    code = 'ADC_config();\n';
+      break;
+      case 'DC':
+    Blockly.Firebird.definitions_['motor_function']= 'void motion_config (void)\n{\n\tDDRA = DDRA | 0x0F; //set direction of the PORTA 3 to PORTA 0 pins as output\n\tPORTA = PORTA & 0xF0; // set initial value of the PORTA 3 to PORTA 0 pins to logic 0\n\tDDRL = DDRL | 0x18;   //Setting PL3 and PL4 pins as output for PWM generation\n\tPORTL = PORTL | 0x18; //PL3 and PL4 pins are for velocity control using PWM\n}\n';
+    code = 'motion_config();\n';
+      break;
+      case 'enc':
+      Blockly.Firebird.definitions_['variables_function']= 'unsigned long int ShaftCountLeft = 0; //to keep track of left position encoder\nunsigned long int ShaftCountRight = 0; //to keep track of right position encoder\nunsigned int Degrees; //to accept angle in degrees for turning\n';
+      Blockly.Firebird.definitions_['left_enc_function']= 'void left_encoder_pin_config (void)\n{\n\tDDRE  = DDRE & 0xEF;  //Set the direction of the PORTE 4 pin as input\n\tPORTE = PORTE | 0x10; //Enable internal pull-up for PORTE 4 pin\n}\n';
+      Blockly.Firebird.definitions_['right_enc_function']= 'void right_encoder_pin_config (void)\n{\n\tDDRE  = DDRE & 0xDF;  //Set the direction of the PORTE 4 pin as input\n\tPORTE = PORTE | 0x20; //Enable internal pull-up for PORTE 4 pin\n}\n';
+      Blockly.Firebird.definitions_['left_int_function']= 'void left_position_encoder_interrupt_init (void)\n{\n\tcli(); //Clears the global interrupt\n\tEICRB = EICRB | 0x02; // INT4 is set to trigger with falling edge\n\tEIMSK = EIMSK | 0x10; // Enable Interrupt INT4 for left position encoder\n\tsei();   // Enables the global interrupt \n}\n';
+      Blockly.Firebird.definitions_['right_int_function']= 'void right_position_encoder_interrupt_init (void)\n{\n\tcli(); //Clears the global interrupt\n\tEICRB = EICRB | 0x08; // INT5 is set to trigger with falling edge\n\tEIMSK = EIMSK | 0x20; // Enable Interrupt INT5 for right position encoder\n\tsei();   // Enables the global interrupt \n}\n';
+      Blockly.Firebird.definitions_['right_ISR_function']= '//ISR for right position encoder\nISR(INT5_vect)\n{\n\tShaftCountRight++;  //increment right shaft position count\n}\n';
+      Blockly.Firebird.definitions_['left_ISR_function']= '//ISR for left position encoder\nISR(INT4_vect)\n{\n\tShaftCountLeft++;  //increment left shaft position count\n}\n';
+    Blockly.Firebird.definitions_['enc_function']= 'void init_encoder_devices (void)\n{\n\tleft_encoder_pin_config();\n\tright_encoder_pin_config();\n\tleft_position_encoder_interrupt_init();\n\tright_position_encoder_interrupt_init();\n}\n';
+    code = 'init_encoder_devices();\n';
+      break;
+      case 'PWM':
+    Blockly.Firebird.definitions_['PWM_function']= '// Timer 5 initialized in PWM mode for velocity control\n// Prescale:256\n// PWM 8bit fast, TOP=0x00FF\n// Timer Frequency:225.000Hz\nvoid timer5_init (void)\n{\n\tTCCR5B = 0x00;  //Stop\n\tTCNT5H = 0xFF;  //Counter higher 8-bit value to which OCR5xH value is compared with\n\tTCNT5L = 0x01;  //Counter lower 8-bit value to which OCR5xH value is compared with\n\tOCR5AH = 0x00;  //Output compare register high value for Left Motor\n\tOCR5AL = 0xFF;  //Output compare register low value for Left Motor\n\tOCR5BH = 0x00;  //Output compare register high value for Right Motor\n\tOCR5BL = 0xFF;  //Output compare register low value for Right Motor\n\tOCR5CH = 0x00;  //Output compare register high value for Motor C1\n\tOCR5CL = 0xFF;  //Output compare register low value for Motor C1\n\tTCCR5A = 0xA9;  /*{COM5A1=1, COM5A0=0; COM5B1=1, COM5B0=0; COM5C1=1 COM5C0=0}For Overriding normal port functionality to OCRnA outputs.{WGM51=0, WGM50=1} Along With WGM52 in TCCR5B for Selecting FAST PWM 8-bit Mode*/\n\tTCCR5B = 0x0B;  //WGM12=1; CS12=0, CS11=1, CS10=1 (Prescaler=64)\n}\n';
+     Blockly.Firebird.definitions_['PWM_in_function']= 'void init_PWM(void)\n{\n\ttimer5_init();\n}\n';
+    code = 'init_PWM();\n';
+      break;
+
+  }
+  // -4.abs() returns -4 in Firebird due to strange order of operation choices.
+  // -4 is actually an operator and a number.  Reflect this in the order.
+  //var order = code < 0 ?
+     // Blockly.Firebird.ORDER_UNARY_PREFIX : Blockly.Firebird.ORDER_ATOMIC;
+   return [code, Blockly.Firebird.ORDER_ATOMIC];
+};
 Blockly.Firebird['set_item'] = function(block) {
   // Variable getter.
   var argument = block.getFieldValue('specifier');
@@ -192,6 +251,13 @@ Blockly.Firebird['return'] = function(block){
       Blockly.Firebird.ORDER_ATOMIC)|| '0';
 
   return "return " + retval + ";";
+};
+
+Blockly.Firebird['Initialise'] = function(block){
+  var retval = Blockly.Firebird.valueToCode(block,"Initialise",
+      Blockly.Firebird.ORDER_ATOMIC)|| '0';
+
+  return retval;
 };
 
 
