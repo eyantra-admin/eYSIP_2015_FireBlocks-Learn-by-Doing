@@ -357,6 +357,29 @@ class ParseController extends Controller {
 		return "buzzer_ms(".$time.");";
 	}
 
+	//IO
+	public function Initialise($block){
+		
+		self::$definitions['includefirebird'] = "#include \"firebird.h\"";
+		$device = $this->valueToCode($block,"Initialise");
+		
+		return $device;
+	}
+
+	public function devices($block){
+		// global $definitions;
+		self::$definitions['includefirebird'] = "#include \"firebird.h\"";
+		$arg = $this->getFieldValue($block,"device");
+		$code = "";
+	    switch ($arg) {
+	     case 'buzz':{$code = 'buzzer_pin_config();';break;}
+	     case 'sw':{$code = 'interrupt_switch_config();';break;}
+	     
+	  	}
+
+	  return $code;
+	}
+
 	//MOTION
 	public function motion($block){
 	
@@ -884,7 +907,7 @@ class ParseController extends Controller {
 		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
 		      break;
 		   default : 
-		      $code = 'Block not connected to display value of()';
+		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
 		      break;
   		}
 

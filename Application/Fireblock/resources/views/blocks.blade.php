@@ -5,8 +5,8 @@
     <tr>
       <td>
       	<h1>
-          <a href="{{ url('/') }}">Fireblocks</a>&rlm; &gt;
-          <a id="title">...</a>
+          <a href="/"><img alt="Brand" src="img/EyantraLogoLarge.png" width="170" height="50"></a>
+           <a style="visibility: hidden" id="title">...</a> 
     
         </h1>
       </td>
@@ -265,93 +265,7 @@
         </value>
       </block>
     </category>
-    <category id="catLists">
-      <block type="lists_create_empty"></block>
-      <block type="lists_create_with"></block>
-      <block type="lists_repeat">
-        <value name="NUM">
-          <block type="math_number">
-            <field name="NUM">5</field>
-          </block>
-        </value>
-      </block>
-      <block type="lists_length"></block>
-      <block type="lists_isEmpty"></block>
-      <block type="lists_indexOf">
-        <value name="VALUE">
-          <block type="variables_get">
-            <field name="VAR" class="listVar">...</field>
-          </block>
-        </value>
-      </block>
-      <block type="lists_getIndex">
-        <value name="VALUE">
-          <block type="variables_get">
-            <field name="VAR" class="listVar">...</field>
-          </block>
-        </value>
-      </block>
-      <block type="lists_setIndex">
-        <value name="LIST">
-          <block type="variables_get">
-            <field name="VAR" class="listVar">...</field>
-          </block>
-        </value>
-      </block>
-      <block type="lists_getSublist">
-        <value name="LIST">
-          <block type="variables_get">
-            <field name="VAR" class="listVar">...</field>
-          </block>
-        </value>
-      </block>
-      <block type="lists_split">
-        <value name="DELIM">
-          <block type="text">
-            <field name="TEXT">,</field>
-          </block>
-        </value>
-      </block>
-    </category>
-    <category id="catColour">
-      <block type="colour_picker"></block>
-      <block type="colour_random"></block>
-      <block type="colour_rgb">
-        <value name="RED">
-          <block type="math_number">
-            <field name="NUM">100</field>
-          </block>
-        </value>
-        <value name="GREEN">
-          <block type="math_number">
-            <field name="NUM">50</field>
-          </block>
-        </value>
-        <value name="BLUE">
-          <block type="math_number">
-            <field name="NUM">0</field>
-          </block>
-        </value>
-      </block>
-      <block type="colour_blend">
-        <value name="COLOUR1">
-          <block type="colour_picker">
-            <field name="COLOUR">#ff0000</field>
-          </block>
-        </value>
-        <value name="COLOUR2">
-          <block type="colour_picker">
-            <field name="COLOUR">#3333ff</field>
-          </block>
-        </value>
-        <value name="RATIO">
-          <block type="math_number">
-            <field name="NUM">0.5</field>
-          </block>
-        </value>
-      </block>
-    </category>
-    <sep></sep>
+  
     <category id="catVariables" custom="VARIABLE"></category>
     <category id="catFunctions" custom="PROCEDURE"></category>
     <category id="catInterrupts">
@@ -360,7 +274,13 @@
     </category>
     <category id="catBasics">
       <block type="function_defnoreturn"></block>
-      <block type="function_defreturn"></block>
+      <block type="function_defreturn">
+          <value name="RETURN">
+          <block type="math_number">
+            <field name="NUM">0</field>
+          </block>
+        </value>
+      </block>
       <block type="register"></block>
       <block type="pin"></block>
       <block type="set_item"></block>
@@ -368,6 +288,8 @@
       <block type="call_function_with_return"></block>
       <block type="return"></block>
       <block type="hex"></block>
+      <block type="Initialise"></block>
+      <block type="devices"></block>
     </category>
     <category id="catPrecursor">
       <block type="incl_ude"></block>

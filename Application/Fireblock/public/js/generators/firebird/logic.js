@@ -35,16 +35,16 @@ Blockly.Firebird['controls_if'] = function(block) {
   var argument = Blockly.Firebird.valueToCode(block, 'IF' + n,
       Blockly.Firebird.ORDER_NONE) || 'false';
   var branch = Blockly.Firebird.statementToCode(block, 'DO' + n);
-  var code = 'if (' + argument + ') {\n' + branch + '}';
+  var code = 'if (' + argument + ')\n {\n' + branch + '}';
   for (n = 1; n <= block.elseifCount_; n++) {
     argument = Blockly.Firebird.valueToCode(block, 'IF' + n,
       Blockly.Firebird.ORDER_NONE) || 'false';
     branch = Blockly.Firebird.statementToCode(block, 'DO' + n);
-    code += ' else if (' + argument + ') {\n' + branch + '}';
+    code += ' else if (' + argument + ')\n {\n' + branch + '}';
   }
   if (block.elseCount_) {
     branch = Blockly.Firebird.statementToCode(block, 'ELSE');
-    code += ' else {\n' + branch + '}';
+    code += ' else\n {\n' + branch + '}';
   }
   return code + '\n';
 };
@@ -141,14 +141,13 @@ Blockly.Firebird['delay_ms'] = function(block) {
 };
 
 Blockly.Firebird['buzzer_on'] = function(block) {
-      Blockly.Firebird.definitions_['include_firebird']= '#include "firebird.h"';
+      Blockly.Firebird.definitions_['buzzer_on_function']= 'void buzzer_on (void)\n{\n\tPORTC = PORTC | 0x08;\n}\n';
   var code = 'buzzer_on();\n';
   return code;
 };
 
 Blockly.Firebird['buzzer_off'] = function(block) {
-   Blockly.Firebird.definitions_['include_firebird']= '#include "firebird.h"';
-      //Blockly.Firebird.definitions_('port_restore') = 'port_restore = 0;\n'
+   Blockly.Firebird.definitions_['buzzer_off_function']= 'void buzzer_off (void)\n{\n\tPORTC = PORTC & 0xF7;\n}\n';
   var code = 'buzzer_off();\n';
   return code;
 };
