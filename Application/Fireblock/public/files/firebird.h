@@ -599,6 +599,7 @@ void port_init()
 	lcd_port_config();
 	adc_pin_config();
 	MOSFET_switch_config();
+	interrupt_switch_config();
 	motion_pin_config();
 	servo1_pin_config(); //Configure PORTB 5 pin for servo motor 1 operation
 	servo2_pin_config(); //Configure PORTB 6 pin for servo motor 2 operation
@@ -626,6 +627,7 @@ timer5_init();
 left_position_encoder_interrupt_init();
 right_position_encoder_interrupt_init();
 sensor_config ();
+
 
 sei(); //Enables the global interrupts
 }

@@ -243,6 +243,14 @@ void adc_pin_config (void)
 	DDRK = 0x00; //set PORTK direction as input
 	PORTK = 0x00; //set PORTK pins floating
 }
+
+//Function to configure Interrupt switch
+void interrupt_switch_config (void)
+{
+ DDRE = DDRE & 0x7F;  //PORTE 7 pin set as input  
+ PORTE = PORTE | 0x80; //PORTE7 internal pull-up enabled
+}
+
 //MOSFET switch port configuration
 void MOSFET_switch_config (void)
 {
@@ -589,6 +597,7 @@ void port_init()
 {
 	lcd_port_config();
 	adc_pin_config();
+	interrupt_switch_config();
 	MOSFET_switch_config();
 	motion_pin_config();
 	servo1_pin_config(); //Configure PORTB 5 pin for servo motor 1 operation

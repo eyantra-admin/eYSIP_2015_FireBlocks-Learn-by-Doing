@@ -5,7 +5,7 @@
     <tr>
       <td>
       	<h1>
-          <a href="/"><img alt="Brand" src="img/EyantraLogoLarge.png" width="170" height="50"></a>
+          <a href="/"><img alt="Brand" src="img/EyantraLogoLarge.png" width="170" height="40"></a>
            <a style="visibility: hidden" id="title">...</a> 
     
         </h1>
@@ -74,6 +74,7 @@
     </category>
     <category id="catDisplay">
       <block type="display_init"></block>
+       <block type="display_text"></block>
       <block type="display_cursor"></block>
       <block type="display_channel">
         <value name="row">

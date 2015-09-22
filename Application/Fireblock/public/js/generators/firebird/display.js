@@ -63,6 +63,16 @@ Blockly.Firebird['display_channel'] = function(block) {
   return code;
 };
 
+Blockly.Firebird['display_text'] = function(block) {
+  // Math operators with single operand.
+  
+  
+  
+  var arg0=block.getFieldValue('text');
+  var code = 'lcd_string("' + arg0 + '");'
+  return code;
+};
+
 Blockly.Firebird['logic_compare1'] = function(block) {
   // Comparison operator.
   var OPERATORS = {

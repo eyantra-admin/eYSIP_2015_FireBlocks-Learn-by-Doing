@@ -50,3 +50,17 @@ Blockly.Blocks['display_channel'] = {
     this.setTooltip('');
   }
 };
+
+Blockly.Blocks['display_text'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Display")
+        .appendField(new Blockly.FieldTextInput("text"), "text")
+        
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour(65);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};

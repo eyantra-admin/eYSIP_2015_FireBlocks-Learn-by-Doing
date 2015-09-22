@@ -102,6 +102,11 @@ class ParseController extends Controller {
 			case 'variables_get':{return $this->variables_get($block);break;}
 			case 'int_serv_routine':{return $this->isRoutine($block);break;}
 			case 'int_signal':{return $this->isSignal($block);break;}
+			case 'devices':{return $this->devices($block);break;}
+			case 'Initialise':{return $this->Initialise($block);break;}
+			case 'io_switch':{return $this->io_switch($block);break;}
+			case 'io_ledbargraph':{return $this->io_ledbargraph($block);break;}
+			case 'display_text':{return $this->display_text($block);break;}
 			default : {echo "not defined in blockToCode ".$block->getAttribute('type');}
 		}
 	}
@@ -370,15 +375,41 @@ class ParseController extends Controller {
 		// global $definitions;
 		self::$definitions['includefirebird'] = "#include \"firebird.h\"";
 		$arg = $this->getFieldValue($block,"device");
-		$code = "";
-	    switch ($arg) {
-	     case 'buzz':{$code = 'buzzer_pin_config();';break;}
-	     case 'sw':{$code = 'interrupt_switch_config();';break;}
-	     
-	  	}
+		$code = "init_devices();";
+	    
+	  return $code;
+	}
+
+	public function io_switch($block){
+		// global $definitions;
+		
+		$arg = $this->getFieldValue($block,"status");
+		$code='';
+	   switch ($arg) {
+	    case 'press':{$code = '((PINE & 0x80) != 0x80)';break;}
+	    case 'not press':{$code = '((PINE & 0x80) == 0x80)';break;}
+		
+	   }
 
 	  return $code;
 	}
+
+	public function io_ledbargraph($block){
+	
+		self::$definitions['includefirebird'] = "#include \"firebird.h\"";
+		$check_s = $this->getFieldValue($block,"check");
+		$check_l = $this->getFieldValue($block,"LED_no");
+		$code='';
+		if ($check_s == 'on'){
+		switch ($check_l) {
+	    case 'all':{$code = 'PORTJ = 0xFF;';break;}
+	    
+	   }	
+
+		}
+		return $code;
+	}
+
 
 	//MOTION
 	public function motion($block){
@@ -827,6 +858,13 @@ class ParseController extends Controller {
 
 	}
 
+	public function display_text($block){
+		$defval = $this->getFieldValue($block,"text");
+		
+		return "lcd_string (\"".$defval."\")";
+
+	}
+
 	public function LCD_init($block){
 
 		self::$definitions['includelcd'] = "#include \"lcd.c\"";
@@ -836,7 +874,7 @@ class ParseController extends Controller {
 	}
 
 	public function cursor($block){
-		self::$definitions['includelcd'] = "#include \"lcd.c\"";
+		
 		$pos = $this->getFieldValue($block,'position');
 		$value = $this->valueToCode($block,'Cursor');
 		$value = $value!=NULL ? $value : '0';
