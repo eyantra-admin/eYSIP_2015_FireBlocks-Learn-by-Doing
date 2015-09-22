@@ -35,7 +35,7 @@ Blockly.Firebird['io_switch'] = function(block) {
     case 'press':
   code = '((PINE & 0x80) != 0x80)';
     break;
-    case 'not press':
+    case 'not_press':
   code = '((PINE & 0x80) == 0x80)';
     break;
   }

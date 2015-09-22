@@ -9,12 +9,7 @@
 int main() {
 
 	init_devices();
-	while(1){
-		buzzer_on();
-		_delay_ms(1000);
-		buzzer_off();
-		_delay_ms(1000);
-	}
+	lcd_print_text(0,0,"text,");
 
  return 0;
 }

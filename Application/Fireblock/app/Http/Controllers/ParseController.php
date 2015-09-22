@@ -382,12 +382,12 @@ class ParseController extends Controller {
 
 	public function io_switch($block){
 		// global $definitions;
-		
+		self::$definitions['includefirebird'] = "#include \"firebird.h\"";
 		$arg = $this->getFieldValue($block,"status");
 		$code='';
 	   switch ($arg) {
 	    case 'press':{$code = '((PINE & 0x80) != 0x80)';break;}
-	    case 'not press':{$code = '((PINE & 0x80) == 0x80)';break;}
+	    case 'not_press':{$code = '((PINE & 0x80) == 0x80)';break;}
 		
 	   }
 
@@ -403,8 +403,30 @@ class ParseController extends Controller {
 		if ($check_s == 'on'){
 		switch ($check_l) {
 	    case 'all':{$code = 'PORTJ = 0xFF;';break;}
+	    case '1':{$code = 'PORTJ |= 0x01;';break;}
+	    case '2':{$code = 'PORTJ |= 0x02;';break;}
+	    case '3':{$code = 'PORTJ |= 0x04;';break;}
+	    case '4':{$code = 'PORTJ |= 0x08;';break;}
+	    case '5':{$code = 'PORTJ |= 0x10;';break;}
+	    case '6':{$code = 'PORTJ |= 0x20;';break;}
+	    case '7':{$code = 'PORTJ |= 0x40;';break;}
+	    case '8':{$code = 'PORTJ |= 0x80;';break;}
+	}
+}
+	    else{
+		switch ($check_l) {
+	    case 'all':{$code = 'PORTJ = 0x00;';break;}
+	    case '1':{$code = 'PORTJ &= 0xFE;';break;}
+	    case '2':{$code = 'PORTJ &= 0xFD;';break;}
+	    case '3':{$code = 'PORTJ &= 0xFB;';break;}
+	    case '4':{$code = 'PORTJ &= 0xF7;';break;}
+	    case '5':{$code = 'PORTJ &= 0xEF;';break;}
+	    case '6':{$code = 'PORTJ &= 0xDF;';break;}
+	    case '7':{$code = 'PORTJ &= 0xBF;';break;}
+	    case '8':{$code = 'PORTJ &= 0x7F;';break;}
 	    
-	   }	
+	   }
+
 
 		}
 		return $code;
@@ -859,10 +881,15 @@ class ParseController extends Controller {
 	}
 
 	public function display_text($block){
-		$defval = $this->getFieldValue($block,"text");
+		$row = $this->valueToCode($block,'row');
+		$col = $this->valueToCode($block,'column');
+		$digit = $this->getFieldValue($block,'text');
+		$code = '';
+		self::$definitions['includefirebird'] = "#include \"firebird.h\"";
 		
-		return "lcd_string (\"".$defval."\")";
-
+		      $code = "lcd_print_text(".$row.",".$col.",\"".$digit."\");";
+		     
+  		return $code;
 	}
 
 	public function LCD_init($block){

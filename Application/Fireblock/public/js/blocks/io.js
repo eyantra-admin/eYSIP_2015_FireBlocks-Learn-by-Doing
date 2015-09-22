@@ -39,8 +39,8 @@ Blockly.Blocks['io_switch'] = {
     this.setColour(0);
     this.appendDummyInput()
         .appendField("Switch is ")
-        .appendField(new Blockly.FieldDropdown([["pressed", "press"], ["not pressed", "not press"]]), "status");
-    this.setOutput(true);
+        .appendField(new Blockly.FieldDropdown([["pressed", "press"], ["not pressed", "not_press"]]), "status");
+    this.setOutput(true,'Boolean');
     this.setTooltip('');
   }
 };

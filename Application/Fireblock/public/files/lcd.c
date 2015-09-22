@@ -212,4 +212,20 @@ void lcd_print (char row, char coloumn, unsigned int value, int digits)
 		lcd_wr_char('E');
 	}
 }
-		
+	void lcd_print_text (char row, char coloumn, char *str)
+{
+	unsigned char flag=0;
+	if(row==0||coloumn==0)
+	{
+		lcd_home();
+	}
+	else
+	{
+		lcd_cursor(row,coloumn);
+	}
+	while(*str != '\0')
+	{
+		lcd_wr_char(*str);
+		str++;
+	}
+}	

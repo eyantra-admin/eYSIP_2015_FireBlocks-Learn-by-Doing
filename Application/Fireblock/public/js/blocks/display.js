@@ -51,16 +51,23 @@ Blockly.Blocks['display_channel'] = {
   }
 };
 
+
+
 Blockly.Blocks['display_text'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Display")
-        .appendField(new Blockly.FieldTextInput("text"), "text")
-        
-    this.setPreviousStatement(true);
-    this.setNextStatement(true);
-    this.setColour(65);
-    this.setTooltip('');
+ init: function() {
     this.setHelpUrl('http://www.example.com/');
+    this.setColour(65);
+    this.appendValueInput("row")
+        .appendField("print")
+        .appendField("row")
+    this.setInputsInline(true);
+    this.appendValueInput("column")
+        .appendField("column")
+    this.setInputsInline(true);
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldTextInput('text'), 'text');
+    this.setPreviousStatement(true,"null");
+    this.setNextStatement(true,"null");
+    this.setTooltip('');
   }
 };
