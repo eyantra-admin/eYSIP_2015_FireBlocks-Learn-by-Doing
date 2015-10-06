@@ -9,7 +9,15 @@
 int main() {
 
 	init_devices();
-	lcd_print_text(0,0,"text,");
+	while(1){
+		if(((PINE & 0x80) == 0x80)){
+		
+			buzzer_on();
+		}else{
+		
+			buzzer_on();
+		}
+	}
 
  return 0;
 }

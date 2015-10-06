@@ -1269,9 +1269,9 @@ Blockly.Blocks['incl_ude'] = {
 Blockly.Blocks['define'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("#define")
-        .appendField(new Blockly.FieldTextInput("name"), "name")
-        .appendField(new Blockly.FieldTextInput("value"), "value");
+        .appendField("Set")
+        .appendField(new Blockly.FieldTextInput("F_CPU"), "name")
+        .appendField(new Blockly.FieldTextInput("14745600"), "value");
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setColour(120);

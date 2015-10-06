@@ -36,13 +36,14 @@ Blockly.Firebird['controls_if'] = function(block) {
       Blockly.Firebird.ORDER_NONE) || 'false';
   var branch = Blockly.Firebird.statementToCode(block, 'DO' + n);
   var code = 'if (' + argument + ')\n {\n' + branch + '}';
-  for (n = 1; n <= block.elseifCount_; n++) {
+  var no = strval(mutation.getAttribute('elseif'));
+  for (n = 1; n <= no; n++) {
     argument = Blockly.Firebird.valueToCode(block, 'IF' + n,
       Blockly.Firebird.ORDER_NONE) || 'false';
     branch = Blockly.Firebird.statementToCode(block, 'DO' + n);
     code += ' else if (' + argument + ')\n {\n' + branch + '}';
   }
-  if (block.elseCount_) {
+  if (mutation.getAttribute('else')) {
     branch = Blockly.Firebird.statementToCode(block, 'ELSE');
     code += ' else\n {\n' + branch + '}';
   }

@@ -227,12 +227,12 @@ class ParseController extends Controller {
 
 	public function controls_if($block){
 		$mutation = $block->getElementsByTagName('mutation')->item(0);
-
-		$value = $this->valueToCode($block,"IF0");
+		$n=0;
+		$value = $this->valueToCode($block,"IF".$n);
 		$value = ($value!=NULL)?$value:'0';
-		$statements = $this->statementToCode($block,"DO0");
+		$statements = $this->statementToCode($block,"DO".$n);
 		$code = "if(".$value."){\n".$statements."}";
-		if($mutation!=NULL){
+		
 			$no = strval($mutation->getAttribute('elseif'));
 			for($i=1;$i<=$no;$i++){
 				$val =  $this->valueToCode($block,"IF".$i);
@@ -243,7 +243,7 @@ class ParseController extends Controller {
 			if($mutation->getAttribute('else')){
 				$code = $code."else{\n".$this->statementToCode($block,"ELSE")."}";
 			}
-		}
+		
 		return $code;
 	}
 
