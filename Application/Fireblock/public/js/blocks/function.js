@@ -31,27 +31,14 @@ Blockly.Blocks['register'] = {
     this.setTooltip('');
   }
 };
-Blockly.Blocks['set_item'] = {
-  init: function() {
-    this.setHelpUrl('http://www.example.com/');
-    this.setColour(330);
-    this.appendValueInput("set_item")
-        .setCheck("String")
-        .appendField("set")
-        .appendField(new Blockly.FieldTextInput("variable"), "variable");
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, "null");
-    this.setNextStatement(true, "null");
-    this.setTooltip('');
-  }
-};
+
 Blockly.Blocks['set_item'] = {
   init: function() {
     this.setHelpUrl('http://www.example.com/');
     this.setColour(330);
     this.appendDummyInput()
         .appendField("set_variable ")
-        .appendField(new Blockly.FieldDropdown([["none", "none"], ["extern", "extern"], ["volatile", "volatile"], ["register","register"]]), "specifier")
+        .appendField(new Blockly.FieldDropdown([["none", "none"], ["extern", "extern"], ["volatile", "volatile"], ["register","register"], ["static","static"]]), "specifier")
         .appendField(new Blockly.FieldDropdown([["signed", "signed"], ["unsigned", "unsigned"]]), "polarity");
     this.appendValueInput("input")
         .appendField("type")
@@ -60,8 +47,51 @@ Blockly.Blocks['set_item'] = {
         .appendField(new Blockly.FieldTextInput("variable_name"), "NAME");
     this.setPreviousStatement(true, "null");
     this.setNextStatement(true, "null");
-    this.setTooltip('');
-}
+    // Assign 'this' to a variable for use in the tooltip closure below.
+    var thisBlock = this;
+    this.setTooltip(function() {
+      return Blockly.Msg.CONTROLS_FOR_TOOLTIP.replace('%1',
+          thisBlock.getFieldValue('NAME'));
+    });
+},
+/**
+   * Return all variables referenced by this block.
+   * @return {!Array.<string>} List of variable names.
+   * @this Blockly.Block
+   */
+  getVars: function() {
+    return [this.getFieldValue('NAME')];
+  },
+  /**
+   * Notification that a variable is renaming.
+   * If the name matches one of this block's variables, rename it.
+   * @param {string} oldName Previous name of variable.
+   * @param {string} newName Renamed variable.
+   * @this Blockly.Block
+   */
+  renameVar: function(oldName, newName) {
+    if (Blockly.Names.equals(oldName, this.getFieldValue('NAME'))) {
+      this.setFieldValue(newName, 'NAME');
+    }
+  },
+  /**
+   * Add menu option to create getter block for loop variable.
+   * @param {!Array} options List of menu options to add to.
+   * @this Blockly.Block
+   */
+  customContextMenu: function(options) {
+    if (!this.isCollapsed()) {
+      var option = {enabled: true};
+      var name = this.getFieldValue('NAME');
+      option.text = Blockly.Msg.VARIABLES_SET_CREATE_GET.replace('%1', name);
+      var xmlField = goog.dom.createDom('field', null, name);
+      xmlField.setAttribute('name', 'NAME');
+      var xmlBlock = goog.dom.createDom('block', null, xmlField);
+      xmlBlock.setAttribute('type', 'variables_get');
+      option.callback = Blockly.ContextMenu.callbackFactory(this, xmlBlock);
+      options.push(option);
+    }
+  }
 };
 
 
@@ -936,7 +966,7 @@ Blockly.Blocks['procedures_mutatorcontainer'] = {
     this.setTooltip(Blockly.Msg.PROCEDURES_MUTATORCONTAINER_TOOLTIP);
     this.contextMenu = false;
   }
-};
+},
 
 Blockly.Blocks['function_mutatorarg'] = {
   /**

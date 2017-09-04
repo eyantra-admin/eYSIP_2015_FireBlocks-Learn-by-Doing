@@ -68,3 +68,16 @@ Blockly.Blocks['position_turn_back'] = {
     this.setTooltip('');
   }
 }
+
+Blockly.Blocks['ini'] = {
+ init: function() {
+    this.setHelpUrl('http://www.example.com/');
+    this.setColour(0);
+    this.appendValueInput('Init_dev')
+        
+        .appendField('Initialise');
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+  }
+};
+

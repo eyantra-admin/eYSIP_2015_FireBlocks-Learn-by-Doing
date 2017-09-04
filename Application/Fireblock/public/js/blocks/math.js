@@ -191,7 +191,6 @@ Blockly.Blocks['math_number_property'] = {
     var PROPERTIES =
         [[Blockly.Msg.MATH_IS_EVEN, 'EVEN'],
          [Blockly.Msg.MATH_IS_ODD, 'ODD'],
-         [Blockly.Msg.MATH_IS_PRIME, 'PRIME'],
          [Blockly.Msg.MATH_IS_WHOLE, 'WHOLE'],
          [Blockly.Msg.MATH_IS_POSITIVE, 'POSITIVE'],
          [Blockly.Msg.MATH_IS_NEGATIVE, 'NEGATIVE'],

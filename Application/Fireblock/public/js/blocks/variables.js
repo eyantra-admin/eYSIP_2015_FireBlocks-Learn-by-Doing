@@ -130,3 +130,4 @@ Blockly.Blocks['variables_set'] = {
   },
   customContextMenu: Blockly.Blocks['variables_get'].customContextMenu
 };
+

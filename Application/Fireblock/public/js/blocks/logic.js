@@ -71,10 +71,13 @@ Blockly.Blocks['controls_if'] = {
    * @this Blockly.Block
    */
   mutationToDom: function() {
-    if (!this.elseifCount_ && !this.elseCount_) {
-      return null;
-    }
+    
     var container = document.createElement('mutation');
+    if (!this.elseifCount_) {
+      container.setAttribute('elseif', 0);
+    }
+    if(!this.elseCount_)
+    container.setAttribute('else', 0)
     if (this.elseifCount_) {
       container.setAttribute('elseif', this.elseifCount_);
     }
@@ -370,7 +373,7 @@ Blockly.Blocks['bitwise_operator'] = {
         .appendField(new Blockly.FieldDropdown([["&", "BITAND"], ["|", "BITOR"]]), "OP");
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour(230);
+    this.setColour(210);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
   }

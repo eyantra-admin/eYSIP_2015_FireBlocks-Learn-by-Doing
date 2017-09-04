@@ -54,10 +54,12 @@ Blockly.Blocks['hex'] = {
    */
   init: function() {
     this.setHelpUrl('http://www.example.com/');
-    this.setColour(280);
+    this.setColour(210);
     this.appendDummyInput()
         .appendField(new Blockly.FieldTextInput(''), 'HEX');
     this.setOutput(true, 'String');
     this.setTooltip('');
   }
  };
+
+ 
