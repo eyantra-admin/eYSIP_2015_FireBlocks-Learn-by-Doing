@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 
-
+//use App\Http\Controllers\Log;
 use Input;
 use Request;
 session_start();
@@ -55,8 +55,12 @@ class ParseController extends Controller {
 			case 'logic_negate':{return $this->logic_negate($block);break;}
 			case 'logic_ternary':{return $this->logic_ternary($block);break;}
 			case 'logic_null':{return $this->logic_null($block);break;}
+
+			case 'controls_repeat_ext':{return $this->controls_repeat_ext($block);break;}
 			case 'controls_whileUntil':{return $this->controls_whileUntil($block);break;}
+			case 'controls_for':{return $this->controls_for($block);break;}
 			case 'controls_flow_statements':{return $this->controls_flow_statements($block);break;}
+			
 			case 'io_buzzer':{return $this->buzzer_msec($block);break;}
 			case 'text':{return $this->textvalue($block);break;}
 			case 'text_print':{return $this->prints($block);break;}
@@ -82,6 +86,8 @@ class ParseController extends Controller {
 			case 'math_arithmetic':{return $this->math_arithmetic($block);break;}
 			case 'math_single':{return $this->math_single($block);break;}
 			case 'math_trig':{return $this->math_trig($block);break;}
+			case 'math_number_property':{return $this->math_number_property($block);break;}
+			case 'math_change':{return $this->math_change($block);break;}
 			case 'math_modulo':{return $this->math_modulo($block);break;}
 			case 'type_casting':{return $this->type_casting($block);break;}
 			case 'register':{return $this->register($block);break;}
@@ -89,10 +95,11 @@ class ParseController extends Controller {
 			case 'set_item':{return $this->set_item($block);break;}
 			case 'call_function':{return $this->call_function($block);break;}
 			case 'call_function_with_return':{return $this->call_function_with_return($block);break;}
-			case 'function_defreturn':{return $this->function_defreturn($block);break;}
-			case 'function_defnoreturn':{return $this->function_defnoreturn($block);break;}
+			case 'procedures_defreturn':{return $this->procedures_defreturn($block);break;}
+			case 'procedures_defnoreturn':{return $this->procedures_defnoreturn($block);break;}
 			case 'procedures_callnoreturn':{return $this->procedures_callnoreturn($block);break;}
 			case 'procedures_callreturn':{return $this->procedures_callreturn($block);break;}
+			case 'procedures_ifreturn':{return $this->procedures_ifreturn($block);break;}
 			case 'hex':{return $this->hex($block);break;}
 			case 'return':{return $this->returnr($block);break;}
 			case 'variable_get':{return $this->variable_get($block);break;}
@@ -155,12 +162,12 @@ class ParseController extends Controller {
 		return "";
 	}
 
-	public function statementToCode($block,$name){  // Restructure this code still doubtful
+	public function statementToCode($block,$name,$n){  // Restructure this code still doubtful
 		$code = "";
 		$test = $block->firstChild;
 		if($test != NULL){
 			if($test->nodeName != 'next'){
-			$statement = $block->getElementsByTagName('statement')->item(0);
+			$statement = $block->getElementsByTagName('statement')->item($n);
 			if($statement !=NULL){
 				$statement = $statement->firstChild;
 				while($statement != NULL){
@@ -230,23 +237,44 @@ class ParseController extends Controller {
 		$n=0;
 		$value = $this->valueToCode($block,"IF".$n);
 		$value = ($value!=NULL)?$value:'0';
-		$statements = $this->statementToCode($block,"DO".$n);
+		$statements = $this->statementToCode($block,"DO",$n);
 		$code = "if(".$value."){\n".$statements."}";
-		
+				
 			$no = strval($mutation->getAttribute('elseif'));
+			$i=1;
 			for($i=1;$i<=$no;$i++){
 				$val =  $this->valueToCode($block,"IF".$i);
 				$val = ($val!=NULL)?$val:'0';
-				$stat = $this->statementToCode($block,"DO".$i);
+				$stat = $this->statementToCode($block,"DO",$i);
 				$code = $code."else if(".$val."){\n".$stat."}";
 			}
-			if($mutation->getAttribute('else')){
-				$code = $code."else{\n".$this->statementToCode($block,"ELSE")."}";
+			if (strval($mutation->getAttribute('else')))
+			{
+				$code = $code."else{\n".$this->statementToCode($block,"ELSE",$i)."}";
 			}
 		
 		return $code;
 	}
-
+	/*public function controls_if($block) {
+  // If/elseif/else condition.
+  $n = 0;
+  $argument = $this->valueToCode($block, "IF".$n);
+  $argument = ($argument!=NULL)?$argument:"0";    
+  $branch = $this->statementToCode($block, "DO".$n);
+  $code = "if (".$argument.")\n {\n".$branch."}"; 
+  for ($n = 1; $n <= $this->elseifCount_; $n++) {
+    $argument = $this->valueToCode($block, "IF".$n);
+     $argument = ($argument!=NULL)?$argument:"0"; 
+    $branch = $this->statementToCode($block, "DO".$n);
+    $code = $code."else if (".$argument.")\n {\n".$branch."}";
+  }
+  if ($this->elseCount_) {
+    $branch = $this->statementToCode($block, "ELSE");
+    $code = $code."else\n {\n".$branch."}";
+  }
+  return $code."\n";
+}
+*/
 	public function logic_compare($block){
 		$arg0 = $this->valueToCode($block,"A");
 		$arg0 = ($arg0!=NULL)?$arg0:'0';
@@ -309,7 +337,7 @@ class ParseController extends Controller {
 		$then = $this->valueToCode($block,"THEN");
 		$else = $this->valueToCode($block,"ELSE");
 
-		return "(".$condition.")?".$then.":".$else;
+		return "(".$condition.")?".$then.":".$else.";";
 	}
 
 	public function logic_null($block){
@@ -318,6 +346,33 @@ class ParseController extends Controller {
 
 	//LOOPS
 
+	public function controls_repeat_ext($block){
+		$repeats = $this->valueToCode($block,"TIMES");
+		$repeats = ($repeats!=NULL)?$repeats:'0';
+		$statements = $this->statementToCode($block,"DO",0);
+		return "for(int countz=1;countz<=".$repeats.";countz++){".$statements."}";
+	}
+	
+	public function controls_whileUntil($block){
+		$mode = $this->getFieldValue($block,"MODE");
+		$arg = $this->valueToCode($block,"BOOL");
+		$arg = ($arg!=NULL)?$arg:'0';
+		$statements = $this->statementToCode($block,"DO",0);
+		if($mode == 'UNTIL'){
+			$arg = '!'.$arg;
+		}
+		return "while(".$arg."){".$statements."}";
+	}
+
+	public function controls_for($block){
+		$name_item = $this->getFieldValue($block,"VAR");
+		$to_val = $this->valueToCode($block,'TO');
+		$from_val = $this->valueToCode($block,'FROM');
+		$by_val = $this->valueToCode($block,'BY');
+		$statements = $this->statementToCode($block,"DO",0);
+		return "for(int ".$name_item."=".$from_val.";".$name_item."<=".$to_val.";".$name_item."=".$name_item."+".$by_val."){".$statements."}";
+	}
+
 	public function controls_flow_statements($block){
 		$code = $this->getFieldValue($block,"FLOW");
 		switch($code){
@@ -325,17 +380,6 @@ class ParseController extends Controller {
 			case 'CONTINUE':{$code = "continue;";break;}
 		}
 		return $code;
-	}
-
-	public function controls_whileUntil($block){
-		$mode = $this->getFieldValue($block,"MODE");
-		$arg = $this->valueToCode($block,"BOOL");
-		$arg = ($arg!=NULL)?$arg:'0';
-		$statements = $this->statementToCode($block,"DO");
-		if($mode == 'UNTIL'){
-			$arg = '!'.$arg;
-		}
-		return "while(".$arg."){".$statements."}";
 	}
 
 
@@ -487,8 +531,8 @@ class ParseController extends Controller {
 		$arg = $this->valueToCode($block,"motion");
 		$motion = $this->getFieldValue($block,"forward");
 		switch($motion){
-			case 'fwd':{$motion = 'forward_mm';break;}
-			case 'back':{$motion = 'back_mm';break;}
+			case 'fwd':{$motion = "forward_mm";break;}
+			case 'back':{$motion = "back_mm";break;}
 		}
 		return $motion."(".$arg.");";
 	}
@@ -522,7 +566,7 @@ class ParseController extends Controller {
 	public function position_turn_back($block){
 		// global $definitions;
 		self::$definitions['includefirebird'] = "#include \"firebird.h\"";
-		$arg = $this->valueToCode($block,"turn_back");
+		$arg = $this->valueToCode($block,"back_turn");
 		$arg = $arg%360;
 		$motion = $this->getFieldValue($block,"forward");
 		switch($motion){
@@ -621,7 +665,7 @@ class ParseController extends Controller {
 		$value = $value!=NULL?$value:'0';
 		// global $definitions;
 		if($arg != 'NEG'){
-			self::$definitions['includemath'] = "#include<math.h>";
+			self::$definitions['includemath'] = "#include <math.h>";
 		}
 		$code = "";
 		switch($arg){
@@ -643,7 +687,7 @@ class ParseController extends Controller {
 		$value = $value!=NULL?$value:'0';
 		$value = strval((3.1416/180)*floatval($value));
 		// global $definitions;
-		self::$definitions['includemath'] = "#include<math.h>";
+		self::$definitions['includemath'] = "#include <math.h>";
 		$code = "";
 		switch($arg){
 			case 'SIN':{$code = "sin(".$value.")";break;}
@@ -657,13 +701,45 @@ class ParseController extends Controller {
 		return $code;
 	}
 
+	
+	public function math_number_property($block){
+		$arg = $this->getFieldValue($block,"PROPERTY");
+		$value = $this->valueToCode($block,"NUMBER_TO_CHECK");
+		$value = $value!=NULL?$value:'0';
+		// global $definitions;
+		self::$definitions['includemath'] = "#include <math.h>";
+		$code = "";
+		switch($arg){
+			case 'EVEN':{$code = $value." % 2 == 0";break;}
+			case 'ODD':{$code = $value." % 2 == 1";break;}
+			case 'WHOLE':{$code = $value." % 1 == 0";break;}
+			case 'POSITIVE':{$code = $value." > 0";break;}
+			case 'NEGATIVE':{$code = $value." < 0";break;}
+			case 'DIVISIBLE_BY':{
+				$divisor_val = $this->valueToCode($block,"DIVISOR");
+				if(!$divisor_val)
+					$code = "Division by 0";
+				else
+					$code = $value.' % '.$divisor_val.' == 0';
+				break;}
+		}
+
+		return $code;
+	}
+
+	public function math_change($block){
+		$change_by = $this->valueToCode($block,"DELTA");
+		$var_name = $this->getFieldValue($block,"VAR");
+		return $var_name." = ".$var_name." + ".$change_by.";";
+	}
+
 	public function math_modulo($block){
 		$dividend = $this->valueToCode($block,"DIVIDEND");
 		$divisor = $this->valueToCode($block,"DIVISOR");
 		$dividend = $dividend!=NULL?$dividend:"0";
 		$divisor = $divisor!=NULL?$divisor:"0";
 
-		return $dividend."%".$divisor;
+		return $dividend." % ".$divisor;
 	}
 
 
@@ -767,10 +843,10 @@ class ParseController extends Controller {
 
 
 	}
-	public function function_defnoreturn($block){
+	public function procedures_defnoreturn($block){
 
 		$funcName = $this->getFieldValue($block,"NAME");
-		$statements = $this->statementToCode($block,"STACK");
+		$statements = $this->statementToCode($block,"STACK",0);
 		$args = array();
 		$args = $this->getArgs($block);
 		/*foreach(array_values($args) as $arg){
@@ -784,10 +860,10 @@ class ParseController extends Controller {
 	    }
 	}
 
-	public function function_defreturn($block){
+	public function procedures_defreturn($block){
 		$type=   $this->getFieldValue($block,"types");
 		$funcName = $this->getFieldValue($block,"NAME");
-		$statements = $this->statementToCode($block,"STACK");
+		$statements = $this->statementToCode($block,"STACK",0);
 		$args=array();
 		$args=$this->getArgs($block);
 		$return = $this->valueToCode($block,"RETURN");
@@ -843,6 +919,21 @@ class ParseController extends Controller {
 		}
 		return null;
 	}
+
+	public function procedures_ifreturn($block){
+		$condition = $this->valueToCode($block, 'CONDITION');
+        $condition = $condition != NULL? $condition:'false';
+		$code = "if (".$condition.") {\n";
+		 
+    		$value = $this->valueToCode($block, 'VALUE');
+        	$value = $value != NULL? $value : 'null';
+    		$code = $code."  return ".$value.";\n";
+  		
+  		$code = $code."}\n";
+  		return $code;
+	}
+
+	
 
 	public function hex($block){
 		$value = $this->getFieldValue($block,'HEX');
@@ -904,11 +995,11 @@ class ParseController extends Controller {
 		
 		$pos = $this->getFieldValue($block,'position');
 		$value = $this->valueToCode($block,'Cursor');
-		$value = $value!=NULL ? $value : '0';
+		$value = $value!=NULL ? $value : '1';
 		$code = '';
 		switch ($pos) {
-	    case 'row': {$code = 'row_pos= '.$value.';\n';break;}
-	    case 'column': {$code = 'column_pos= '.$value.';\n';break;}
+	    case 'row': {$code = "row_pos= ".$value.";\n";break;}
+	    case 'column': {$code = "column_pos= ".$value.";\n";break;}
   		}
 		return $code;
 	}
@@ -922,60 +1013,8 @@ class ParseController extends Controller {
 		$digit = $this->getFieldValue($block,'digit');
 		$code = '';
 		self::$definitions['includefirebird'] = "#include \"firebird.h\"";
-		switch ($arg) {
-		  case 'ADC_Conversion(2)':
-		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
-		      break;
-		  case 'ADC_Conversion(3)':
-		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
-		      break;
-			case 'ADC_Conversion(1)':
-		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
-		      break;
-		  case 'ADC_Conversion(4)':
-		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
-			  break;
-			case 'ADC_Conversion(5)':
-		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
-			  break;
-			case 'ADC_Conversion(6)':
-		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
-			  break;
-			case 'ADC_Conversion(7)':
-		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
-			  break;
-			case 'ADC_Conversion(8)':
-		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
-			  break;
-			case 'spi_master_tx_and_rx(5)':
-		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
-			  break;
-			case 'spi_master_tx_and_rx(6)':
-		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
-			  break;
-			case 'spi_master_tx_and_rx(7)':
-		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
-		      break;
-		  case 'ADC_Conversion(9)':
-		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
-		      break;
-		  case 'ADC_Conversion(10)':
-		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
-		      break;
-			case 'ADC_Conversion(11)':
-		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
-		      break;
-		  case 'ADC_Conversion(12)':
-		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
-			  break;
-			case 'ADC_Conversion(13)':
-		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
-		      break;
-		   default : 
-		      $code = 'lcd_print('.$row.','.$col.','.$arg.','.$digit.');';
-		      break;
-  		}
-
+		
+		      $code = "lcd_print(".$row.",".$col.",".$arg.",".$digit.");";
   		return $code;
 	}
 
@@ -997,7 +1036,7 @@ class ParseController extends Controller {
 	public function isRoutine($block){
 		$vector = $this->getFieldValue($block,"VECTOR");
 		$attribute = $this->getFieldValue($block,"ATTR");
-		$bloc = $this->statementToCode($block, "BLOC");
+		$bloc = $this->statementToCode($block, "BLOC",0);
 		if($attribute != 'attribute'){
 			$attribute = ', '.$attribute;
 		}else{
@@ -1008,7 +1047,7 @@ class ParseController extends Controller {
 
 	public function isSignal($block){
 		$vector = $this->getFieldValue($block,"VECTOR");
-		$bloc = $this->statementToCode($block, "BLOC");
+		$bloc = $this->statementToCode($block, "BLOC",0);
 		return 'SIGNAL('.$vector.'){'.$bloc.'}';
 	}
 
