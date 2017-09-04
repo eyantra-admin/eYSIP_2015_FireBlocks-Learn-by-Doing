@@ -185,34 +185,7 @@ Blockly.Firebird['math_number_property'] = function(block) {
   }
   var dropdown_property = block.getFieldValue('PROPERTY');
   var code;
-  if (dropdown_property == 'PRIME') {
-    // Prime is a special case as it is not a one-liner test.
-    Blockly.Firebird.definitions_['import_Firebird_math'] =
-        'import \'Firebird:math\' as Math;';
-    var functionName = Blockly.Firebird.provideFunction_(
-        'math_isPrime',
-        [ 'bool ' + Blockly.Firebird.FUNCTION_NAME_PLACEHOLDER_ + '(n) {',
-          '  // https://en.wikipedia.org/wiki/Primality_test#Naive_methods',
-          '  if (n == 2 || n == 3) {',
-          '    return true;',
-          '  }',
-          '  // False if n is null, negative, is 1, or not whole.',
-          '  // And false if n is divisible by 2 or 3.',
-          '  if (n == null || n <= 1 || n % 1 != 0 || n % 2 == 0 ||' +
-            ' n % 3 == 0) {',
-          '    return false;',
-          '  }',
-          '  // Check all the numbers of form 6k +/- 1, up to sqrt(n).',
-          '  for (var x = 6; x <= Math.sqrt(n) + 1; x += 6) {',
-          '    if (n % (x - 1) == 0 || n % (x + 1) == 0) {',
-          '      return false;',
-          '    }',
-          '  }',
-          '  return true;',
-          '}']);
-    code = functionName + '(' + number_to_check + ')';
-    return [code, Blockly.Firebird.ORDER_UNARY_POSTFIX];
-  }
+  
   switch (dropdown_property) {
     case 'EVEN':
       code = number_to_check + ' % 2 == 0';
@@ -247,7 +220,7 @@ Blockly.Firebird['math_change'] = function(block) {
       Blockly.Firebird.ORDER_ADDITIVE) || '0';
   var varName = Blockly.Firebird.variableDB_.getName(block.getFieldValue('VAR'),
       Blockly.Variables.NAME_TYPE);
-  return varName + ' = (' + varName + ' is num ? ' + varName + ' : 0) + ' +
+  return varName + ' = ' + varName + ' + ' +
       argument0 + ';\n';
 };
 
@@ -455,18 +428,8 @@ Blockly.Firebird['math_random_int'] = function(block) {
       Blockly.Firebird.ORDER_NONE) || '0';
   var argument1 = Blockly.Firebird.valueToCode(block, 'TO',
       Blockly.Firebird.ORDER_NONE) || '0';
-  var functionName = Blockly.Firebird.provideFunction_(
-      'math_random_int',
-      [ 'int ' + Blockly.Firebird.FUNCTION_NAME_PLACEHOLDER_ + '(num a, num b) {',
-        '  if (a > b) {',
-        '    // Swap a and b to ensure a is smaller.',
-        '    num c = a;',
-        '    a = b;',
-        '    b = c;',
-        '  }',
-        '  return new Math.Random().nextInt(b - a + 1) + a;',
-        '}']);
-  var code = functionName + '(' + argument0 + ', ' + argument1 + ')';
+  
+  var code = 'Random(' + argument0 + ', ' + argument1 + ')';
   return [code, Blockly.Firebird.ORDER_UNARY_POSTFIX];
 };
 

@@ -21,7 +21,7 @@ Blockly.Firebird['devices'] = function(block) {
   switch (operator)
   {
     case 'buzz':
-    Blockly.Firebird.definitions_['buzz_config_function']= 'void buzzer_pin_config (void)\n{\n\tDDRC = DDRC | 0x08;   //Setting PORTC 3 as outpt\n\tPORTC = PORTC & 0xF7;   //Setting PORTC 3 logic low to turnoff buzzer\n}\n';
+    Blockly.Firebird.definitions_['buzz_config_function']= 'void buzzer_pin_config (void)\n{\n\tDDRC = DDRC | 0x08;   //Setting PORTC pin 3 (where buzzer is connected) as output\n\tPORTC = PORTC & 0xF7;   //Setting PORTC pin 3 logic low to turnoff buzzer\n}\n';
     
     code = 'buzzer_pin_config();\n';
       break;
@@ -156,7 +156,7 @@ Blockly.Firebird['register'] = function(block) {
   return code;
    };
     
-    Blockly.Firebird['function_defnoreturn'] = function(block) {
+    Blockly.Firebird['procedures_defnoreturn'] = function(block) {
   // Define a procedure with a return value.
   var funcName = Blockly.Firebird.variableDB_.getName(block.getFieldValue('NAME'),
       Blockly.Procedures.NAME_TYPE);
@@ -201,7 +201,7 @@ Blockly.Firebird['register'] = function(block) {
   var code = funcName + '(' + args.join(', ') + ');\n';
   return code;
 };
-Blockly.Firebird['function_defreturn'] = function(block) {
+Blockly.Firebird['procedures_defreturn'] = function(block) {
   // Define a procedure with a return value.
   var funcName = Blockly.Firebird.variableDB_.getName(block.getFieldValue('NAME'),
       Blockly.Procedures.NAME_TYPE);

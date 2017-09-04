@@ -29,6 +29,7 @@ goog.provide('Blockly.Firebird.logic');
 goog.require('Blockly.Firebird');
 
 
+
 Blockly.Firebird['controls_if'] = function(block) {
   // If/elseif/else condition.
   var n = 0;
@@ -36,14 +37,13 @@ Blockly.Firebird['controls_if'] = function(block) {
       Blockly.Firebird.ORDER_NONE) || 'false';
   var branch = Blockly.Firebird.statementToCode(block, 'DO' + n);
   var code = 'if (' + argument + ')\n {\n' + branch + '}';
-  var no = strval(mutation.getAttribute('elseif'));
-  for (n = 1; n <= no; n++) {
+  for (n = 1; n <= block.elseifCount_; n++) {
     argument = Blockly.Firebird.valueToCode(block, 'IF' + n,
       Blockly.Firebird.ORDER_NONE) || 'false';
     branch = Blockly.Firebird.statementToCode(block, 'DO' + n);
     code += ' else if (' + argument + ')\n {\n' + branch + '}';
   }
-  if (mutation.getAttribute('else')) {
+  if (block.elseCount_) {
     branch = Blockly.Firebird.statementToCode(block, 'ELSE');
     code += ' else\n {\n' + branch + '}';
   }
@@ -137,19 +137,19 @@ Blockly.Firebird['buzzer'] = function(block) {
 
 Blockly.Firebird['delay_ms'] = function(block) {
   var delay_time = Blockly.Firebird.valueToCode(block, 'delay_value', Blockly.Firebird.ORDER_NONE) || '1000';
-  var code = '_delay_ms(' + delay_time + ');\n';
+  var code = '_delay_ms(' + delay_time + ');// add delay of ' + delay_time +' msec\n';
   return code;
 };
 
 Blockly.Firebird['buzzer_on'] = function(block) {
-      Blockly.Firebird.definitions_['buzzer_on_function']= 'void buzzer_on (void)\n{\n\tPORTC = PORTC | 0x08;\n}\n';
-  var code = 'buzzer_on();\n';
+      Blockly.Firebird.definitions_['buzzer_on_function']= 'void buzzer_on (void)\n{\n\tPORTC = PORTC | 0x08; // Port C pin 3 = 1 (To turn the buzzer ON) \n}\n';
+  var code = 'buzzer_on();// call the function -- buzzer_on \n';
   return code;
 };
 
 Blockly.Firebird['buzzer_off'] = function(block) {
-   Blockly.Firebird.definitions_['buzzer_off_function']= 'void buzzer_off (void)\n{\n\tPORTC = PORTC & 0xF7;\n}\n';
-  var code = 'buzzer_off();\n';
+   Blockly.Firebird.definitions_['buzzer_off_function']= 'void buzzer_off (void)\n{\n\tPORTC = PORTC & 0xF7; Port C pin 3 = 0 (To turn the buzzer OFF) \n}\n';
+  var code = 'buzzer_off(); call the function -- buzzer_off \n';
   return code;
 };
 

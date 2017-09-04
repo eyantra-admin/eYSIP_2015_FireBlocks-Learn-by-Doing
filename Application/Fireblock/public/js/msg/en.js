@@ -17,12 +17,11 @@ var MSG = {
   catSensor: "Sensor",
   catLoops: "Loops",
   catMath: "Math",
-  catText: "Text",
   
  
   catVariables: "Variables",
   catFunctions: "Functions",
-  catInterrupts: "Interrupts",
+  /*catInterrupts: "Interrupts",*/
   catBasics: 'Basic',
   catPrecursor: 'Precursor',
   listVariable: "list",

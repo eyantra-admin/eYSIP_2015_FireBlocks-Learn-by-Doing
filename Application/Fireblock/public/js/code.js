@@ -468,8 +468,8 @@ Code.initLanguage = function() {
   document.getElementById('runButton').title = MSG['runTooltip'];
   document.getElementById('trashButton').title = MSG['trashTooltip'];
 
-  var categories = ['catLogic', 'catio', 'catDisplay', 'catMotion','catPosition', 'catSensor', 'catBuzzer', 'catBasics', 'catLoops', 'catMath', 'catText'
-  , 'catVariables', 'catFunctions', 'catInterrupts','catBasics','catPrecursor'];
+  var categories = ['catLogic', 'catio', 'catDisplay', 'catMotion','catPosition', 'catSensor', 'catBuzzer', 'catBasics', 'catLoops', 'catMath'
+  , 'catVariables', 'catFunctions',/* 'catInterrupts',*/'catBasics','catPrecursor'];
   for (var i = 0, cat; cat = categories[i]; i++) {
     document.getElementById(cat).setAttribute('name', MSG[cat]);
   }

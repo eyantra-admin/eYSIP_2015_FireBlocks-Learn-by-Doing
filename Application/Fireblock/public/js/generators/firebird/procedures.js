@@ -29,7 +29,7 @@ goog.provide('Blockly.Firebird.procedures');
 goog.require('Blockly.Firebird');
 
 
-Blockly.Firebird['procedures_defreturn'] = function(block) {
+/*Blockly.Firebird['procedures_defreturn'] = function(block) {
   // Define a procedure with a return value.
   var funcName = Blockly.Firebird.variableDB_.getName(block.getFieldValue('NAME'),
       Blockly.Procedures.NAME_TYPE);
@@ -63,7 +63,7 @@ Blockly.Firebird['procedures_defreturn'] = function(block) {
 
 // Defining a procedure without a return value uses the same generator as
 // a procedure with a return value.
-Blockly.Firebird['procedures_defnoreturn'] = Blockly.Firebird['procedures_defreturn'];
+Blockly.Firebird['procedures_defnoreturn'] = Blockly.Firebird['procedures_defreturn'];*/
 
 Blockly.Firebird['procedures_callreturn'] = function(block) {
   // Call a procedure with a return value.

@@ -17,9 +17,9 @@ Blockly.Firebird['io_buzzer'] = function(block) {
   
       code = 'buzzer_ms(' + arg + ');\n';
      
- Blockly.Firebird.definitions_['buzzer_on_function']= 'void buzzer_on (void)\n{\n\tPORTC = PORTC | 0x08;\n}\n';
-      Blockly.Firebird.definitions_['buzzer_off_function']= 'void buzzer_off (void)\n{\n\tPORTC = PORTC & 0xF7;\n}\n';
-  Blockly.Firebird.definitions_['soft_left_2_function']= 'void buzzer_ms (int time)\n{\n\tbuzzer_on();\n\t_delay_ms(time);\n\tbuzzer_off();\n}\n';
+ Blockly.Firebird.definitions_['buzzer_on_function']= 'void buzzer_on (void)\n{\n\tPORTC = PORTC | 0x08; // Port C pin 3 = 1 (To turn the buzzer ON) and Bit masking is done so that rest pins status remain unchanged \n}\n';
+      Blockly.Firebird.definitions_['buzzer_off_function']= 'void buzzer_off (void)\n{\n\tPORTC = PORTC & 0xF7; // Port C pin 3 = 0 (To turn the buzzer OFF) and Bit masking is done so that rest pins status remain unchanged \n}\n';
+  Blockly.Firebird.definitions_['soft_left_2_function']= 'void buzzer_ms (int time)\n{\n\tbuzzer_on();\n\t_delay_ms(time); // delay \n\tbuzzer_off();\n}\n';
     return code;
 };
 
@@ -57,31 +57,31 @@ Blockly.Firebird['io_ledbargraph'] = function(block) {
     {
       switch (operator1){
         case 'all':
-      code = 'PORTJ = 0xFF;\n';
+      code = 'PORTJ = 0xFF; // Turn on all bargraph LEDs (connected to PORTJ) // \n';
       break;
       case '1':
-      code = 'PORTJ | = 0x01;\n';
+      code = 'PORTJ | = 0x01; // Turn on 1st bargraph LED (connected to PORTJ pin 1) // \n';
       break;
       case '2':
-      code = 'PORTJ | = 0x02;\n';
+      code = 'PORTJ | = 0x02; // Turn on 2nd bargraph LED (connected to PORTJ pin 2) // \n';
       break;
       case '3':
-      code = 'PORTJ | = 0x04;\n';
+      code = 'PORTJ | = 0x04; // Turn on 3rd bargraph LED (connected to PORTJ pin 3) // \n';
       break;
       case '4':
-      code = 'PORTJ | = 0x08;\n';
+      code = 'PORTJ | = 0x08; // Turn on 4th bargraph LED (connected to PORTJ pin 4) // \n';
       break;
       case '5':
-      code = 'PORTJ | = 0x10;\n';
+      code = 'PORTJ | = 0x10; // Turn on 5th bargraph LED (connected to PORTJ pin 5) // \n';
       break;
       case '6':
-      code = 'PORTJ | = 0x20;\n';
+      code = 'PORTJ | = 0x20; // Turn on 6th bargraph LED (connected to PORTJ pin 6) // \n';
       break;
       case '7':
-      code = 'PORTJ | = 0x40;\n';
+      code = 'PORTJ | = 0x40; // Turn on 7th bargraph LED (connected to PORTJ pin 7) // \n';
       break;
       case '8':
-      code = 'PORTJ | = 0x80;\n';
+      code = 'PORTJ | = 0x80; // Turn on 8th bargraph LED (connected to PORTJ pin 8) // \n';
       break;
     }
 }
