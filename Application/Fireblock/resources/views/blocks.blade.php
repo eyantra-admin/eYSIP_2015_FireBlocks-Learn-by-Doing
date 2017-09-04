@@ -4,7 +4,7 @@
 <table width="100%" height="100%">
     <tr>
       <td>
-      	<h1>
+        <h1>
           <a href="/"><img alt="Brand" src="img/EyantraLogoLarge.png" width="170" height="40"></a>
            <a style="visibility: hidden" id="title">...</a> 
     
@@ -64,27 +64,44 @@
       <block type="bitwise_operator"></block>
       <block type="logic_negate"></block>
       <block type="logic_boolean"></block>
+      <block type="hex"></block>
       <block type="logic_null"></block>
       <block type="logic_ternary"></block>
     </category>
     <category id="catio">
-      <block type="io_buzzer"></block>
+      <block type="io_buzzer">
+        <value name="buzzer">
+          <block type="math_number" id="23">
+            <field name="NUM">500</field>
+          </block>
+        </value> 
+      </block>
       <block type="io_ledbargraph"></block>
       <block type="io_switch"></block>
     </category>
     <category id="catDisplay">
       <block type="display_init"></block>
-       <block type="display_text"></block>
-      <block type="display_cursor"></block>
-      <block type="display_channel">
-        <value name="row">
+       <block type="display_text">
+       <value name="row">
           <block type="math_number" id="23">
-            <field name="NUM">0</field>
+            <field name="NUM">1</field>
           </block>
         </value>
         <value name="column">
           <block type="math_number" id="23">
-            <field name="NUM">0</field>
+            <field name="NUM">1</field>
+          </block>
+        </value> 
+       </block>
+      <block type="display_channel">
+        <value name="row">
+          <block type="math_number" id="23">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <value name="column">
+          <block type="math_number" id="23">
+            <field name="NUM">1</field>
           </block>
         </value>
       </block>
@@ -179,7 +196,7 @@
           </block>
         </value>
       </block>
-      <block type="controls_forEach"></block>
+      
       <block type="controls_flow_statements"></block>
     </category>
     <category id="catMath">
@@ -187,7 +204,6 @@
       <block type="math_arithmetic"></block>
       <block type="math_single"></block>
       <block type="math_trig"></block>
-      <block type="math_constant"></block>
       <block type="math_number_property"></block>
       <block type="math_change">
         <value name="DELTA">
@@ -196,105 +212,33 @@
           </block>
         </value>
       </block>
-      <block type="math_round"></block>
-      <block type="math_on_list"></block>
       <block type="math_modulo"></block>
-      <block type="math_constrain">
-        <value name="LOW">
-          <block type="math_number">
-            <field name="NUM">1</field>
-          </block>
-        </value>
-        <value name="HIGH">
-          <block type="math_number">
-            <field name="NUM">100</field>
-          </block>
-        </value>
-      </block>
-      <block type="math_random_int">
-        <value name="FROM">
-          <block type="math_number">
-            <field name="NUM">1</field>
-          </block>
-        </value>
-        <value name="TO">
-          <block type="math_number">
-            <field name="NUM">100</field>
-          </block>
-        </value>
-      </block>
-      <block type="math_random_float"></block>
       <block type="type_casting"></block>
+      
     </category>
-    <category id="catText">
-      <block type="text"></block>
-      <block type="text_join"></block>
-      <block type="text_append">
-        <value name="TEXT">
-          <block type="text"></block>
-        </value>
-      </block>
-      <block type="text_length"></block>
-      <block type="text_isEmpty"></block>
-      <block type="text_indexOf">
-        <value name="VALUE">
-          <block type="variables_get">
-            <field name="VAR" class="textVar">...</field>
-          </block>
-        </value>
-      </block>
-      <block type="text_charAt">
-        <value name="VALUE">
-          <block type="variables_get">
-            <field name="VAR" class="textVar">...</field>
-          </block>
-        </value>
-      </block>
-      <block type="text_getSubstring">
-        <value name="STRING">
-          <block type="variables_get">
-            <field name="VAR" class="textVar">...</field>
-          </block>
-        </value>
-      </block>
-      <block type="text_changeCase"></block>
-      <block type="text_trim"></block>
-      <block type="text_print"></block>
-      <block type="text_prompt_ext">
-        <value name="TEXT">
-          <block type="text"></block>
-        </value>
-      </block>
-    </category>
+    
   
-    <category id="catVariables" custom="VARIABLE"></category>
+    <category id="catVariables" custom="VARIABLE">
+
+    </category>
     <category id="catFunctions" custom="PROCEDURE"></category>
-    <category id="catInterrupts">
+    <!-- <category id="catInterrupts">
       <block type="int_serv_routine"><block>
       <block type="int_signals"><block>
-    </category>
+    </category> -->
     <category id="catBasics">
-      <block type="function_defnoreturn"></block>
-      <block type="function_defreturn">
-          <value name="RETURN">
-          <block type="math_number">
-            <field name="NUM">0</field>
-          </block>
-        </value>
-      </block>
-      <block type="register"></block>
-      <block type="pin"></block>
-      <block type="set_item"></block>
-      <block type="call_function"></block>
-      <block type="call_function_with_return"></block>
+      
       <block type="return"></block>
-      <block type="hex"></block>
       <block type="Initialise"></block>
       <block type="devices"></block>
+      <block type="text"></block>
+      <block type="ini"></block>
     </category>
     <category id="catPrecursor">
       <block type="incl_ude"></block>
       <block type="define"></block>
+      <block type="set_item"></block>
+
     </category>
   </xml>
 @endsection
