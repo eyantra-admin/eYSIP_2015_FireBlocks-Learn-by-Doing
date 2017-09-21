@@ -7,7 +7,7 @@
 	<meta name="google" value="notranslate">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="_token" content="{!! csrf_token() !!}"/>
-	<title>Fireblocks</title>
+	<title>Firebird-Blockly</title>
 
 	<script type="text/javascript" src="{{ URL::asset('/js/storage.js') }}"></script>
 	<script type="text/javascript" src="{{ URL::asset('/js/blockly_compressed.js') }}"></script>
