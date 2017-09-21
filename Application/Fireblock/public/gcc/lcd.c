@@ -11,7 +11,7 @@
 #define cbit(reg,bit)	reg &= ~(1<<bit)
 
 void init_ports();
-void lcd_reset_4bit();
+void lcd_set_4bit();
 void lcd_init();
 void lcd_wr_command(unsigned char);
 void lcd_wr_char(char);

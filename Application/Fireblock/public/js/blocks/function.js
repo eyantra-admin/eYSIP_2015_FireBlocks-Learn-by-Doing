@@ -1258,7 +1258,7 @@ Blockly.Blocks['devices'] = {
     this.setColour(20);
     this.appendDummyInput()
         .setAlign(Blockly.ALIGN_RIGHT)
-        .appendField(new Blockly.FieldDropdown([["Buzzer", "buzz"], ["Switch", "sw"], ["Bar_graph_LEDS", "LED"],["LCD", "LCD"],["Sensors", "sen"],["Motors", "DC"],["Encoder", "enc"],["PWM", "PWM"]]), "device");
+        .appendField(new Blockly.FieldDropdown([["Devices", "device"],["Buzzer", "buzz"], ["Switch", "sw"], ["Bar_graph_LEDS", "LED"],["LCD", "LCD"],["Sensors", "sen"],["Motors", "DC"],["Encoder", "enc"],["PWM", "PWM"]]), "device");
     this.setInputsInline(true);
     this.setOutput(true, "String");
     this.setTooltip('');

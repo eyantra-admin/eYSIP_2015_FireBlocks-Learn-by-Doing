@@ -142,14 +142,16 @@ Blockly.Firebird['delay_ms'] = function(block) {
 };
 
 Blockly.Firebird['buzzer_on'] = function(block) {
-      Blockly.Firebird.definitions_['buzzer_on_function']= 'void buzzer_on (void)\n{\n\tPORTC = PORTC | 0x08; // Port C pin 3 = 1 (To turn the buzzer ON) \n}\n';
+ Blockly.Firebird.interfacings_['Buzzer_interfacing'] = '\nBuzzer connections:\n\tBuzzer: PORTC 3';  
+Blockly.Firebird.definitions_['buzzer_on_function']= 'void buzzer_on (void)\n{\n\tPORTC = PORTC | 0x08; // Port C pin 3 = 1 (To turn the buzzer ON) \n}\n';
   var code = 'buzzer_on();// call the function -- buzzer_on \n';
   return code;
 };
 
 Blockly.Firebird['buzzer_off'] = function(block) {
-   Blockly.Firebird.definitions_['buzzer_off_function']= 'void buzzer_off (void)\n{\n\tPORTC = PORTC & 0xF7; Port C pin 3 = 0 (To turn the buzzer OFF) \n}\n';
-  var code = 'buzzer_off(); call the function -- buzzer_off \n';
+Blockly.Firebird.interfacings_['Buzzer_interfacing'] = '\nBuzzer connections:\n\tBuzzer: PORTC 3';  
+Blockly.Firebird.definitions_['buzzer_off_function']= 'void buzzer_off (void)\n{\n\tPORTC = PORTC & 0xF7; //Port C pin 3 = 0 (To turn the buzzer OFF) \n}\n';
+  var code = 'buzzer_off(); //call the function -- buzzer_off \n';
   return code;
 };
 

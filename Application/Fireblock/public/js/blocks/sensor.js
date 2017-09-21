@@ -21,7 +21,7 @@ Blockly.Blocks['sensor_sharp'] = {
     this.setHelpUrl('http://www.example.com/');
     this.setColour(20);
     this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown([["front", "fr"], ["left", "lf"], ["right", "rf"], ["left_diagonal", "ld"], ["rihgt_diagonal", "rd"]]), "sharp")
+        .appendField(new Blockly.FieldDropdown([["front", "fr"], ["left", "lf"], ["right", "rf"], ["left_diagonal", "ld"], ["right_diagonal", "rd"]]), "sharp")
         .appendField("sharp sensor");
     this.setOutput(true);
     this.setTooltip('');

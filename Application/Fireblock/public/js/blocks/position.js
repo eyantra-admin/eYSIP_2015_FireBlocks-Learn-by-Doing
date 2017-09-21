@@ -78,6 +78,9 @@ Blockly.Blocks['ini'] = {
         .appendField('Initialise');
     this.setPreviousStatement(true);
     this.setNextStatement(true);
+    this.setMutator(new Blockly.Mutator(['buzzer',
+                                         'switch']));
+    this.arguments_ = [];
   }
 };
 

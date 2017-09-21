@@ -73,6 +73,7 @@ profile["default"] = profile["arduino"];
 Blockly.Firebird.init = function(workspace) {
   // Create a dictionary of definitions to be printed before setups.
   Blockly.Firebird.definitions_ = Object.create(null);
+  Blockly.Firebird.interfacings_ = Object.create(null);
   // Create a dictionary of setups to be printed before the code.
   Blockly.Firebird.setups_ = Object.create(null);
 
@@ -104,23 +105,32 @@ Blockly.Firebird.finish = function(code) {
   code = code.replace(/\n\s+$/, '\n');
 
   // Convert the definitions dictionary into a list.
+  var interfacingw = [];
   var imports = [];
   var variables =[];
   var definitions = [];
+  
   var fcpu ='';
   for (var name in Blockly.Firebird.definitions_) {
     var def = Blockly.Firebird.definitions_[name];
     if(name == 'defineFCPU'){
       fcpu = def;
-    } else if (def.match(/^#include/)) {
+    } else if (def.match('include')) {
       imports.push(def);
-    } else if (name === 'variables') {
+    } else if (def.match('include_math')) {
+      imports.push(def);
+    }else if (name === 'variables') {
       variables.push(def);
     } else {
       definitions.push(def);
     }
   }
-  var allDefs = fcpu + imports.join('\n')+"\n#include <avr/interrupt.h>\n#include <avr/io.h>\n#include <util/delay.h>" + '\n\n' + definitions.join('\n');
+  for (var name in Blockly.Firebird.interfacings_) {
+    var def = Blockly.Firebird.interfacings_[name];
+    interfacingw.push(def);
+  }
+  
+  var allDefs = "/********************************************************************************\nCreated by: e-Yantra team \n Pin connections:\n" + interfacingw.join('\n') + "\n********************************************************************************/\n" + fcpu +  "\n#include <avr/interrupt.h>\n#include <avr/io.h>\n#include <util/delay.h>\n"  + imports.join('\n') + '\n\n' + definitions.join('\n');
   return allDefs.replace(/\n\n+/g, '\n\n').replace(/\n*$/, '\n\n\n') + code +'\n';
 };
 

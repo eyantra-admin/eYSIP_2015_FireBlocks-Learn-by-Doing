@@ -355,6 +355,15 @@ unsigned int Sharp_GP2D12_estimation(unsigned char adc_reading)
 	return distanceInt;
 }
 
+unsigned int sharp_Conversion(unsigned char Ch)
+{
+	unsigned int sharp;
+	unsigned char value;
+	value = ADC_Conversion(Ch);
+	sharp = Sharp_GP2D12_estimation(value);
+	return sharp;
+}
+
 
 
 void turn_on_sharp234_wl (void) //turn on Sharp IR range sensors 2, 3, 4 and white line sensor's red LED

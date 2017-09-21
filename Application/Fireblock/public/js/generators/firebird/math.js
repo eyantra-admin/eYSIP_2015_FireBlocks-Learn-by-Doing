@@ -83,8 +83,7 @@ Blockly.Firebird['math_single'] = function(block) {
     code = '-' + arg;
     return [code, Blockly.Firebird.ORDER_UNARY_PREFIX];
   }
-  Blockly.Firebird.definitions_['import_Firebird_math'] =
-      'import \'Firebird:math\' as Math;';
+  Blockly.Firebird.definitions_['include_math'] ='#include <math.h>\n';
   if (operator == 'ABS' || operator.substring(0, 5) == 'ROUND') {
     arg = Blockly.Firebird.valueToCode(block, 'NUM',
         Blockly.Firebird.ORDER_UNARY_POSTFIX) || '0';
@@ -99,37 +98,47 @@ Blockly.Firebird['math_single'] = function(block) {
   // wrapping the code.
   switch (operator) {
     case 'ABS':
-      code = arg + '.abs()';
+      code = 'abs('+ arg +')';
       break;
     case 'ROOT':
-      code = 'Math.sqrt(' + arg + ')';
+      
+      code = 'sqrt(' + arg + ')';
       break;
     case 'LN':
-      code = 'Math.log(' + arg + ')';
+      
+      code = 'ln(' + arg + ')';
       break;
     case 'EXP':
-      code = 'Math.exp(' + arg + ')';
+     
+      code = 'exp(' + arg + ')';
       break;
     case 'POW10':
-      code = 'Math.pow(10,' + arg + ')';
+      
+      code = 'pow(10,' + arg + ')';
       break;
     case 'ROUND':
+      
       code = arg + '.round()';
       break;
     case 'ROUNDUP':
+     
       code = arg + '.ceil()';
       break;
     case 'ROUNDDOWN':
+      
       code = arg + '.floor()';
       break;
     case 'SIN':
-      code = 'Math.sin(' + arg + ' / 180 * Math.PI)';
+      
+      code = 'sin(' + arg + ')';
       break;
     case 'COS':
-      code = 'Math.cos(' + arg + ' / 180 * Math.PI)';
+      
+      code = 'cos(' + arg + ')';
       break;
     case 'TAN':
-      code = 'Math.tan(' + arg + ' / 180 * Math.PI)';
+      
+      code = 'tan(' + arg + ')';
       break;
   }
   if (code) {
@@ -139,16 +148,16 @@ Blockly.Firebird['math_single'] = function(block) {
   // wrapping the code.
   switch (operator) {
     case 'LOG10':
-      code = 'Math.log(' + arg + ') / Math.log(10)';
+      code = 'log(' + arg + ') / log(10)';
       break;
     case 'ASIN':
-      code = 'Math.asin(' + arg + ') / Math.PI * 180';
+      code = 'asin(' + arg + ') / PI * 180';
       break;
     case 'ACOS':
-      code = 'Math.acos(' + arg + ') / Math.PI * 180';
+      code = 'acos(' + arg + ') / PI * 180';
       break;
     case 'ATAN':
-      code = 'Math.atan(' + arg + ') / Math.PI * 180';
+      code = 'atan(' + arg + ') / PI * 180';
       break;
     default:
       throw 'Unknown math operator: ' + operator;
@@ -179,10 +188,8 @@ Blockly.Firebird['math_number_property'] = function(block) {
   // Check if a number is even, odd, prime, whole, positive, or negative
   // or if it is divisible by certain number. Returns true or false.
   var number_to_check = Blockly.Firebird.valueToCode(block, 'NUMBER_TO_CHECK',
-      Blockly.Firebird.ORDER_MULTIPLICATIVE);
-  if (!number_to_check) {
-    return ['false', Blockly.Python.ORDER_ATOMIC];
-  }
+      Blockly.Firebird.ORDER_MULTIPLICATIVE) || '0';
+  
   var dropdown_property = block.getFieldValue('PROPERTY');
   var code;
   
@@ -204,7 +211,7 @@ Blockly.Firebird['math_number_property'] = function(block) {
       break;
     case 'DIVISIBLE_BY':
       var divisor = Blockly.Firebird.valueToCode(block, 'DIVISOR',
-          Blockly.Firebird.ORDER_MULTIPLICATIVE);
+          Blockly.Firebird.ORDER_MULTIPLICATIVE) || '1';
       if (!divisor) {
         return ['false', Blockly.Python.ORDER_ATOMIC];
       }

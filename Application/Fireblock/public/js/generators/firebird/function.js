@@ -21,34 +21,43 @@ Blockly.Firebird['devices'] = function(block) {
   switch (operator)
   {
     case 'buzz':
+    Blockly.Firebird.interfacings_['Buzzer_interfacing'] = '\nBuzzer connections:\n\tBuzzer: PORTC 3';  
     Blockly.Firebird.definitions_['buzz_config_function']= 'void buzzer_pin_config (void)\n{\n\tDDRC = DDRC | 0x08;   //Setting PORTC pin 3 (where buzzer is connected) as output\n\tPORTC = PORTC & 0xF7;   //Setting PORTC pin 3 logic low to turnoff buzzer\n}\n';
     
     code = 'buzzer_pin_config();\n';
       break;
       case 'sw':
+    Blockly.Firebird.interfacings_['switch_interfacing'] = '\nSwitch connections:\n\tInterrupt switch: PORTE 7 (INT7)';
     Blockly.Firebird.definitions_['sw_config_function']= 'void switch_config (void)\n{\n\tDDRE = DDRE & 0x7F; // PORTE 7 pin set as input\n\tPORTE = PORTE | 0x80; // PORTE7 internal pull up enabled \n}\n';
     
     code = 'switch_config();\n';
       break;
       case 'LED':
+    Blockly.Firebird.interfacings_['bargraph_LED_interfacing'] = '\nBargraph LED connections:\n\tLED bargraph: PORTJ 7 to PORTJ 0';
     Blockly.Firebird.definitions_['LED_function']= 'void bar_graph_LED_config (void)\n{\n\tDDRJ = 0xFF;  //PORT J is configured as output\n\tPORTJ = 0x00; //Output is set to 0\n}\n';
     
     code = 'bar_graph_LED_config();\n';
       break;
       case 'LCD':
+    Blockly.Firebird.interfacings_['lcd_interfacing'] = '\nLCD Connections:\n\tLCD     Microcontroller Pins\n\tRS  --> PC0\n\tRW  --> PC1\n\tEN  --> PC2\n\tDB7 --> PC7\n\tDB6 --> PC6\n\tDB5 --> PC5\n\tDB4 --> PC4\n\t\n';
     Blockly.Firebird.definitions_['LCD_function']= 'void LCD_config (void)\n{\n\tDDRC = DDRC | 0xF7; //all the LCD pins direction set as output\n\tPORTC = PORTC & 0x80; // all the LCD pins are set to logic 0 except PORTC 7\n}\n';
     
     code = 'LCD_config();\n';
       break;
       case 'sen':
+    Blockly.Firebird.interfacings_['White_line_sensor_function']='\nWhite line sensor Connections:\n\tADC ch\t\tPort\t\tSensor\n\t0\t\tPORTF 1\t\tLeft\n\t1\t\tPORTF 2\t\tMiddle\n\t2\t\tPORTF 3\t\tRight\n';
+    Blockly.Firebird.interfacings_['Sharp_sensor_function']='\nSharp sensor Connections:\n\tADC ch\t\tPort\t\tSensor\n\t9\t\tPORTK 1\t\tLeft\n\t10\t\tPORTK 2\t\tLeft Diagonal\n\t11\t\tPORTK 3\t\tMiddle\n\t12\t\tPORTK 4\t\tRight Diagonal\n\t13\t\tPORTK 5\t\tRight\n';
+    Blockly.Firebird.interfacings_['IR_sensor_function']='\nIR Proximity sensor Connections:\n\tADC ch\t\tPort\t\tSensor\n\t4\t\tPORTF 4\t\tLeft\n\t5\t\tPORTF 5\t\tFront Left\n\t6\t\tPORTF 6\t\tMiddle\n\t7\t\tPORTF 7\t\tFront Right\n\t8\t\tPORTK 0\t\tRight\n\t5\t\tATMEGA 8\tBack Right\n\t6\t\tATMEGA 8\tBack\n\t7\t\tATMEGA 8\tBack Left\n';
     Blockly.Firebird.definitions_['ADC_function']= 'void ADC_config (void)\n{\n\tDDRF = 0x00; //set PORTF direction as input\n\tPORTF = 0x00; //set PORTF pins floating\n\tDDRK = 0x00; //set PORTK direction as input\n\tPORTK = 0x00; //set PORTK pins floating\n}\n';
     code = 'ADC_config();\n';
       break;
       case 'DC':
+    Blockly.Firebird.interfacings_['motion_interfacing'] = '\nMotor Connections\n\tL-1 --> PA0\n\tL-2 --> PA1\n\tR-1 --> PA2\n\tR-2 --> PA3\n\tE-L --> PL3(OC5A)\n\tE-R --> PL4(OC5B)\n';
     Blockly.Firebird.definitions_['motor_function']= 'void motion_config (void)\n{\n\tDDRA = DDRA | 0x0F; //set direction of the PORTA 3 to PORTA 0 pins as output\n\tPORTA = PORTA & 0xF0; // set initial value of the PORTA 3 to PORTA 0 pins to logic 0\n\tDDRL = DDRL | 0x18;   //Setting PL3 and PL4 pins as output for PWM generation\n\tPORTL = PORTL | 0x18; //PL3 and PL4 pins are for velocity control using PWM\n}\n';
     code = 'motion_config();\n';
       break;
       case 'enc':
+      Blockly.Firebird.interfacings_['encode_interfacing'] ='\nEncoder Connections:\n\tleft motor position encoder: PE4 (INT4) \n\tright motor position encoder: PE5 (INT5)\n';
       Blockly.Firebird.definitions_['variables_function']= 'unsigned long int ShaftCountLeft = 0; //to keep track of left position encoder\nunsigned long int ShaftCountRight = 0; //to keep track of right position encoder\nunsigned int Degrees; //to accept angle in degrees for turning\n';
       Blockly.Firebird.definitions_['left_enc_function']= 'void left_encoder_pin_config (void)\n{\n\tDDRE  = DDRE & 0xEF;  //Set the direction of the PORTE 4 pin as input\n\tPORTE = PORTE | 0x10; //Enable internal pull-up for PORTE 4 pin\n}\n';
       Blockly.Firebird.definitions_['right_enc_function']= 'void right_encoder_pin_config (void)\n{\n\tDDRE  = DDRE & 0xDF;  //Set the direction of the PORTE 4 pin as input\n\tPORTE = PORTE | 0x20; //Enable internal pull-up for PORTE 4 pin\n}\n';
@@ -64,6 +73,7 @@ Blockly.Firebird['devices'] = function(block) {
      Blockly.Firebird.definitions_['PWM_in_function']= 'void init_PWM(void)\n{\n\ttimer5_init();\n}\n';
     code = 'init_PWM();\n';
       break;
+   
 
   }
   // -4.abs() returns -4 in Firebird due to strange order of operation choices.
@@ -271,8 +281,8 @@ Blockly.Firebird['hex']  = function(block){
 
 Blockly.Firebird['incl_ude'] = function(block) {
   var arg =block.getFieldValue('header file');
-  var code="#include\""+arg+"\""+"\n";
-  return code;
+  Blockly.Firebird.definitions_['include'] = "#include\""+arg+"\""+"\n";
+  return '';
 };
 //Blockly.Firebird[''] = function(block) 
 

@@ -229,10 +229,15 @@
     <category id="catBasics">
       
       <block type="return"></block>
-      <block type="Initialise"></block>
       <block type="devices"></block>
+      <block type="Initialise">
+        <value name="Initialise">
+          <block type="devices">
+          </block>
+        </value>
+      </block>
       <block type="text"></block>
-      <block type="ini"></block>
+      
     </category>
     <category id="catPrecursor">
       <block type="incl_ude"></block>

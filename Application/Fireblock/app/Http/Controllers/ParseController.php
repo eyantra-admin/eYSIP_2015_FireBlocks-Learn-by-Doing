@@ -596,11 +596,11 @@ class ParseController extends Controller {
 		$arg = $this->getFieldValue($block,"sharp");
 		$code = "";
 	    switch ($arg) {
-	     case 'fr':{$code = 'ADC_Conversion(11)';break;}
-	     case 'lf':{$code = 'ADC_Conversion(9)';break;}
-		 case 'rf':{$code = 'ADC_Conversion(13)';break;}
-		 case 'ld':{$code = 'ADC_Conversion(10)';break;}
-		 case 'rd':{$code = 'ADC_Conversion(12)';break;}   
+	     case 'fr':{$code = 'sharp_Conversion(11)';break;}
+	     case 'lf':{$code = 'sharp_Conversion(9)';break;}
+		 case 'rf':{$code = 'sharp_Conversion(13)';break;}
+		 case 'ld':{$code = 'sharp_Conversion(10)';break;}
+		 case 'rd':{$code = 'sharp_Conversion(12)';break;}   
 	  	}
 
 	  return $code;
@@ -670,11 +670,11 @@ class ParseController extends Controller {
 		$code = "";
 		switch($arg){
 			case 'ROOT':{$code = "sqrt(".$value.")";break;}
-			case 'ABS':{$code = "sqrt(".$value.")";break;}
-			case 'NEG':{;break;}
-			case 'LN':{$code = "sqrt(".$value.")";break;}
-			case 'LOG10':{$code = "sqrt(".$value.")";break;}
-			case 'EXP':{$code = "sqrt(".$value.")";break;}
+			case 'ABS':{$code = "abs(".$value.")";break;}
+			case 'NEG':{$code = "(-".$value.")";break;}
+			case 'LN':{$code = "ln(".$value.")";break;}
+			case 'LOG10':{$code = "log(".$value.")/log(10)";break;}
+			case 'EXP':{$code = "exp(".$value.")";break;}
 			case 'POW10':{$code = "pow(10,".$value.")";break;}
 		}
 
@@ -717,6 +717,7 @@ class ParseController extends Controller {
 			case 'NEGATIVE':{$code = $value." < 0";break;}
 			case 'DIVISIBLE_BY':{
 				$divisor_val = $this->valueToCode($block,"DIVISOR");
+				$divisor_val = $divisor_val!=NULL?$divisor_val:'1';
 				if(!$divisor_val)
 					$code = "Division by 0";
 				else
@@ -942,7 +943,7 @@ class ParseController extends Controller {
 
 	public function returnr($block){
 		$retval = $this->valueToCode($block,"RETURN");
-		return "return ".$retval;
+		return "return ".$retval.";";
 	}
 
 
@@ -985,8 +986,8 @@ class ParseController extends Controller {
 
 	public function LCD_init($block){
 
-		self::$definitions['includelcd'] = "#include \"lcd.c\"";
-		$code = "lcd_init();\nlcd_set_4_bit();\n";
+		//self::$definitions['includelcd'] = "#include \"lcd.c\"";
+		$code = "lcd_init();\nlcd_set_4bit();\n";
 
 		return $code;
 	}
