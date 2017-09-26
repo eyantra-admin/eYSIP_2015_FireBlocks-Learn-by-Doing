@@ -63,8 +63,6 @@ Blockly.Firebird['devices'] = function(block) {
       Blockly.Firebird.definitions_['right_enc_function']= 'void right_encoder_pin_config (void)\n{\n\tDDRE  = DDRE & 0xDF;  //Set the direction of the PORTE 4 pin as input\n\tPORTE = PORTE | 0x20; //Enable internal pull-up for PORTE 4 pin\n}\n';
       Blockly.Firebird.definitions_['left_int_function']= 'void left_position_encoder_interrupt_init (void)\n{\n\tcli(); //Clears the global interrupt\n\tEICRB = EICRB | 0x02; // INT4 is set to trigger with falling edge\n\tEIMSK = EIMSK | 0x10; // Enable Interrupt INT4 for left position encoder\n\tsei();   // Enables the global interrupt \n}\n';
       Blockly.Firebird.definitions_['right_int_function']= 'void right_position_encoder_interrupt_init (void)\n{\n\tcli(); //Clears the global interrupt\n\tEICRB = EICRB | 0x08; // INT5 is set to trigger with falling edge\n\tEIMSK = EIMSK | 0x20; // Enable Interrupt INT5 for right position encoder\n\tsei();   // Enables the global interrupt \n}\n';
-      Blockly.Firebird.definitions_['right_ISR_function']= '//ISR for right position encoder\nISR(INT5_vect)\n{\n\tShaftCountRight++;  //increment right shaft position count\n}\n';
-      Blockly.Firebird.definitions_['left_ISR_function']= '//ISR for left position encoder\nISR(INT4_vect)\n{\n\tShaftCountLeft++;  //increment left shaft position count\n}\n';
     Blockly.Firebird.definitions_['enc_function']= 'void init_encoder_devices (void)\n{\n\tleft_encoder_pin_config();\n\tright_encoder_pin_config();\n\tleft_position_encoder_interrupt_init();\n\tright_position_encoder_interrupt_init();\n}\n';
     code = 'init_encoder_devices();\n';
       break;

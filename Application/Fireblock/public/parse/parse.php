@@ -66,8 +66,8 @@ function blockToCode($block){
 		case 'position_turn': {return position_turn($block);break;}
 		case 'position_turn_soft':{return position_turn_soft($block);break;}
 		case 'position_turn_back':{return position_turn_back($block);break;}
-		case 'sensor_white':{return sensor_white($block);break;}
-		case 'sensor_sharp':{return sensor_sharp($block);break;}
+		#case 'sensor_white':{return sensor_white($block);break;}
+		#case 'sensor_sharp':{return sensor_sharp($block);break;}
 		case 'sensor_ir':{return sensor_ir($block);break;}
 		case 'buzzer_on':{return buzzer_on($block);break;}
 		case 'buzzer_off':{return buzzer_off($block);break;}
@@ -259,6 +259,7 @@ function logic_bool($block){
 
 function logic_negate($block){
 	$code = valueToCode($block,"BOOL");
+	$code = ($code == 'TRUE')?'1':'0';
 	return "!".$code;
 }
 function logic_operation($block){
@@ -430,9 +431,9 @@ function sensor_white($block){
 	$arg = getFieldValue($block,"line_sensor");
 	$code='';
    switch ($arg) {
-    case 'center':{$code = 'ADC_Conversion(2)';break;}
-    case 'left':{$code = 'ADC_Conversion(3)';break;}
-	case 'right':{$code = 'ADC_Conversion(1)';break;}
+    case 'center':{$code = 'ADC_Conversion(5)';break;}
+    case 'left':{$code = 'ADC_Conversion(4)';break;}
+	case 'right':{$code = 'ADC_Conversion(8)';break;}
    }
 
   return $code;
@@ -443,13 +444,7 @@ function sensor_sharp($block){
 	$definitions['includefirebird'] = "#include \"firebird.h\"";
 	$arg = getFieldValue($block,"sharp");
 	$code = "";
-    switch ($arg) {
-     case 'fr':{$code = 'sharp_fr(11)';break;}
-     case 'lf':{$code = 'sharp_fr(9)';break;}
-	 case 'rf':{$code = 'sharp_fr(13)';break;}
-	 case 'ld':{$code = 'sharp_fr(10)';break;}
-	 case 'rd':{$code = 'sharp_fr(12)';break;}   
-  	}
+    #
 
   return $code;
 }

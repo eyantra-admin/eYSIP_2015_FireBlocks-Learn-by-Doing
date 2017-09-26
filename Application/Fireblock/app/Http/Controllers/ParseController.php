@@ -1085,7 +1085,6 @@ class ParseController extends Controller {
 
 		}
 		
-	    // Escape any html characters
 		//Get the xml file
 		//removes all the blank spaces
 		//$file = preg_replace('/>[ ]*</mi', '><', $file); 

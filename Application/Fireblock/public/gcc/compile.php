@@ -18,7 +18,7 @@ $output3;
 $files = fopen($fileinput,"w");
 fwrite($files,$file);
 fclose($files);
-
+//working status
 exec($command1,$output,$return);
 if(!$return){
 	exec($command2,$output2,$return2);
