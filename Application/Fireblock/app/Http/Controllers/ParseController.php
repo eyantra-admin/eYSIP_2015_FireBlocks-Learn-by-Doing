@@ -821,7 +821,7 @@ class ParseController extends Controller {
 		$args=array();
 		$args=$this->getArgs($block);
 		$funcName=$this->getFieldValue($block,"NAME");
-		 if(count($args)!=NULL){
+		 if(is_array($args) && count(array($args))!=NULL){
 		 	return $funcName."(".join(", ",$args).");";
 		 }
 		 else{
@@ -835,7 +835,7 @@ class ParseController extends Controller {
 		$args=array();
 		$args=$this->getArgs($block);
 		$funcName=$this->getFieldValue($block,"NAME");
-		if(count($args)!=NULL){
+		if(is_array($args) && count(array($args))!=NULL){
 			return $funcName."(".join(", ",$args).");";
 		}
 		else{
@@ -853,7 +853,7 @@ class ParseController extends Controller {
 		/*foreach(array_values($args) as $arg){
 			$code = $code.','.$arg;
 		}*/
-		if(count($args)!=NULL){
+		if(is_array($args) && count(array($args))!=NULL){
 		return "void ".$funcName."(".join(", ",$args)."){\n".$statements."}";
 	    }
 		else{
@@ -871,7 +871,7 @@ class ParseController extends Controller {
 		//echo "$return";
 		$return = $return !=NULL? $return:'0';
 
-	    if(count($args)!=NULL){
+	    if(is_array($args) && count(array($args))!=NULL){
 			return "$type ".$funcName."(".join(", ",$args)."){\n".$statements."\n return"." ".$return."; \n};";
 	    }else{
 			return "$type ".$funcName."() {\n".$statements."\n return ".$return.";\n}";
